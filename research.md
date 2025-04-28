@@ -16,8 +16,6 @@ permalink: /research/
                     <li><a href="#clt">Central Limit Theorem</a></li>
                 </ul>
             </li>
-            <li><a href="#talks">Talks and Posters</a></li>
-            <li><a href="#tools">Tools and Code</a></li>
         </ul>
     </div>
     <div style="flex: 1; text-align: justify;">
