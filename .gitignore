@@ -1,0 +1,21 @@
+# Jekyll output and caches
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Dependencies
+vendor/
+
+# Python scripts and notebooks (optional if you use them)
+*.py
+*.ipynb
+
+# VSCode settings (optional but usually good)
+.vscode/
+
+# Temporary files
+*.log
+*.tmp
+.DS_Store  # Mac OS hidden files
+Thumbs.db  # Windows hidden files
