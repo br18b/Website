@@ -21,10 +21,9 @@
 title: Brano's personal webpage
 email: rabatinb@gmail.com
 description: My research on turbulence and my BeamNG creations.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "https://br18b.github.io"
+baseurl: "/Website"
+github_username:  br18b
 
 # Build settings
 theme: minima
