@@ -26,7 +26,7 @@ permalink: /research/
             Up above the clouds, inside swirling storms, and even across distant galaxies, <strong>turbulence</strong> is constantly shaping the universe.
         </p>
         <figure style="float: right; text-align: left; width: 320px; margin: 0 0 10px 10px;">
-            <img src="/pics/pillars.webp" alt="Pillars of Creation" style="width: 100%;">
+            <img src="{{ site.baseurl }}/pics/pillars.webp" alt="Pillars of Creation" style="width: 100%;">
             <figcaption style="font-size: smaller; color: gray;">The Pillars of Creation. Courtesy of the James Webb Space Telescope.</figcaption>
         </figure>
         <p>
@@ -51,7 +51,7 @@ permalink: /research/
         To study turbulence, we simulate a small patch of the universe - just big enough to capture the swirling chaos we care about. We take a chunk of a molecular cloud, or a region of turbulent gas, and chop it into tiny cells like a 3D pixelated grid. Each cell stores physical quantities like density, velocity, and pressure, giving us a discrete map of a chaotic, flowing medium.
         </p>
         <figure style="text-align: center;">
-            <img src="/pics/density_cube_with_grid.png" alt="Turbulence simulation" width="600"/>
+            <img src="{{ site.baseurl }}/pics/density_cube_with_grid.png" alt="Turbulence simulation" width="600"/>
             <figcaption style="font-size: smaller; color: gray;">A 3D simulation of turbulent density fields in a molecular cloud. Tiny cubes added to visualize spatial discretization.</figcaption>
         </figure>
         <p>
@@ -140,25 +140,24 @@ import matplotlib.pyplot as plt
 import os
 from scipy.stats import norm
 
-def clt_demo(
-    dist_func,     # function to draw random samples
-    n=5,           # number of random variables to sum
-    N=10000,       # how many sums to create
-    bins=100,       # number of bins for the histogram
-    base_dir="",
-    title="CLT Demo",
-    filename="plot.png",   # filename to save
-    bounds=[-4.5,4.5]  # cutoff if the distribution is weird
-):
-    # create the ensemble
-    sums = np.zeros(N)
-    for _ in tqdm(range(n), desc="Adding random samples"):
-        sums += dist_func(size=N)
-    
+def clt*demo(
+dist_func, # function to draw random samples
+n=5, # number of random variables to sum
+N=10000, # how many sums to create
+bins=100, # number of bins for the histogram
+base_dir="",
+title="CLT Demo",
+filename="plot.png", # filename to save
+bounds=[-4.5,4.5] # cutoff if the distribution is weird
+): # create the ensemble
+sums = np.zeros(N)
+for * in tqdm(range(n), desc="Adding random samples"):
+sums += dist_func(size=N)
+
     # mean and variance
     mean = np.mean(sums)
     std = np.std(sums)
-    
+
     # normalize ensemble
     normalized = (sums - mean) / std
 
@@ -170,7 +169,7 @@ def clt_demo(
 
     # histogram
     counts, bins_edges, _ = plt.hist(
-        normalized, bins=bins, density=True, alpha=0.7, 
+        normalized, bins=bins, density=True, alpha=0.7,
         color="skyblue", edgecolor="black", label="Ensemble histogram"
     )
 
@@ -192,24 +191,25 @@ def clt_demo(
     print(f"Saved plot to {full_path}")
 
 # fun distributions
+
 def uniform_distribution(size):
-    return np.random.uniform(low=0.0, high=1.0, size=size)
+return np.random.uniform(low=0.0, high=1.0, size=size)
 
 def exponential_distribution(size):
-    return np.random.exponential(scale=1.0, size=size)
+return np.random.exponential(scale=1.0, size=size)
 
 def bernoulli_distribution(size):
-    return np.random.choice([0, 1], size=size)
+return np.random.choice([0, 1], size=size)
 
 def heavy_tail_distribution(size):
-    return np.random.standard_cauchy(size=size)
+return np.random.standard_cauchy(size=size)
 
-def sample_custom_tail(alpha, size):
-    u = np.random.uniform(low=0.0, high=1.0, size=size)
-    s = np.sign(2 * u - 1)
-    transformed = ( (np.pi / 2)**(1/(1+alpha)) * np.abs(2*u - 1) )**(1+alpha)
-    x = s * (np.tan(transformed))**(1/(1+alpha))
-    return x
+def sample*custom_tail(alpha, size):
+u = np.random.uniform(low=0.0, high=1.0, size=size)
+s = np.sign(2 * u - 1)
+transformed = ( (np.pi / 2)\*\*(1/(1+alpha)) \_ np.abs(2*u - 1) )\*\*(1+alpha)
+x = s * (np.tan(transformed))\*\*(1/(1+alpha))
+return x
 
 spiky1 = lambda size: sample_custom_tail(alpha=0, size=size)
 spiky2 = lambda size: sample_custom_tail(alpha=0.5, size=size)
@@ -224,26 +224,28 @@ dir = 'CLT_plots'
 os.makedirs(dir, exist_ok=True)
 
 # Example runs
+
 for n in [1,2,3,4,5,10,50,100,1000]:
-    clt_demo(spiky1, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy1_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 2")
-    clt_demo(spiky2, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy2_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 2.5")
-    clt_demo(spiky3, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy3_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 3")
-    clt_demo(spiky4, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy4_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 3.5")
-    clt_demo(spiky5, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy5_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 4")
-    clt_demo(spiky6, n=n, N=Npts, base_dir=dir,
-    filename="Cauchy6_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 5")
-    clt_demo(uniform_distribution, n=n, N=Npts, base_dir=dir,
-    filename="uniform_n"+str(n)+".png", title="Uniform Distribution")
-    clt_demo(exponential_distribution, n=n, N=Npts, base_dir=dir,
-    filename="exponential_n"+str(n)+".png", title="Exponential Distribution")
-    clt_demo(bernoulli_distribution, n=n, N=Npts, base_dir=dir,
-    filename="bernoulli_n"+str(n)+".png", title="Bernoulli Distribution")
-  </code></pre>
+clt_demo(spiky1, n=n, N=Npts, base_dir=dir,
+filename="Cauchy1_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 2")
+clt_demo(spiky2, n=n, N=Npts, base_dir=dir,
+filename="Cauchy2_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 2.5")
+clt_demo(spiky3, n=n, N=Npts, base_dir=dir,
+filename="Cauchy3_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 3")
+clt_demo(spiky4, n=n, N=Npts, base_dir=dir,
+filename="Cauchy4_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 3.5")
+clt_demo(spiky5, n=n, N=Npts, base_dir=dir,
+filename="Cauchy5_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 4")
+clt_demo(spiky6, n=n, N=Npts, base_dir=dir,
+filename="Cauchy6_n"+str(n)+".png", title="Gen. Cauchy, alpha ~ 5")
+clt_demo(uniform_distribution, n=n, N=Npts, base_dir=dir,
+filename="uniform_n"+str(n)+".png", title="Uniform Distribution")
+clt_demo(exponential_distribution, n=n, N=Npts, base_dir=dir,
+filename="exponential_n"+str(n)+".png", title="Exponential Distribution")
+clt_demo(bernoulli_distribution, n=n, N=Npts, base_dir=dir,
+filename="bernoulli_n"+str(n)+".png", title="Bernoulli Distribution")
+</code></pre>
+
 </div>
 
 <script>
@@ -259,11 +261,12 @@ function toggleCode() {
   }
 }
 </script>
+
         <p>
             We can now look at some examples. We start with the uniform baseline distribution that generates numbers between 0 and 1 with equal probability. With that, the expected histogram for $n = 1$ is flat:
         </p>
         <figure style="text-align: center;">
-            <img src="/CLT_plots/uniform_n1.png" alt="Uniform Distribution" width="100%"/>
+            <img src="{{ site.baseurl }}/CLT_plots/uniform_n1.png" alt="Uniform Distribution" width="100%"/>
             <figcaption style="font-size: smaller; color: gray;">Uniform Distribution.</figcaption>
         </figure>
         <p>
@@ -271,20 +274,21 @@ function toggleCode() {
         </p>
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
             <figure style="margin: 0;">
-                <img src="/CLT_plots/uniform_n2.png" alt="Plot 1" style="width: 100%;">
+                <img src="{{ site.baseurl }}/CLT_plots/uniform_n2.png" alt="Plot 1" style="width: 100%;">
             </figure>
             <figure style="margin: 0;">
-                <img src="/CLT_plots/uniform_n3.png" alt="Plot 2" style="width: 100%;">
+                <img src="{{ site.baseurl }}/CLT_plots/uniform_n3.png" alt="Plot 2" style="width: 100%;">
             </figure>
             <figure style="margin: 0;">
-                <img src="/CLT_plots/uniform_n10.png" alt="Plot 3" style="width: 100%;">
+                <img src="{{ site.baseurl }}/CLT_plots/uniform_n10.png" alt="Plot 3" style="width: 100%;">
             </figure>
             <figure style="margin: 0;">
-                <img src="/CLT_plots/uniform_n50.png" alt="Plot 4" style="width: 100%;">
+                <img src="{{ site.baseurl }}/CLT_plots/uniform_n50.png" alt="Plot 4" style="width: 100%;">
             </figure>
         </div>
         <p>
             Convergence towards a distribution is a very rich and interesting topic; not all distributions will lead to the Gaussian (a heavy-tailed Cauchy distribution will converge to another Cauchy distribution, for example), but as long as the distribution is "well-behaved", convergence is assured. Berry-Esseen's theorem guarantees a relatively slow convergence (the difference between Gaussian and the distribution after summing $n$ terms is on the order of $1/\sqrt{n}$) provided the third moment $\langle x^3 \rangle$ exists and is finite. We saw that the convergence for the uniform distribution is rather quick; this is because the third moment is actually zero, in which case the convergence is slightly faster ($1/n$).
         </P>
     </div>
+
 </div>
