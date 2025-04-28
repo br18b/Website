@@ -1,0 +1,70 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+  <!-- MathJax script for LaTeX equations -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <!-- Highlight.js for code block highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- Custom script for "Copy Code" button with nicer style -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('pre').forEach((pre) => {
+        const button = document.createElement('button');
+        button.innerText = '📋 Copy';
+        button.style.position = 'absolute';
+        button.style.right = '10px';
+        button.style.top = '10px';
+        button.style.padding = '4px 10px';
+        button.style.fontSize = '0.8em';
+        button.style.fontWeight = 'bold';
+        button.style.fontFamily = 'inherit';
+        button.style.cursor = 'pointer';
+        button.style.backgroundColor = '#f6f8fa';
+        button.style.border = '1px solid #d0d7de';
+        button.style.borderRadius = '6px';
+        button.style.boxShadow = '0 1px 2px rgba(27,31,35,0.04)';
+        button.style.color = '#0969da';
+        button.style.transition = 'background-color 0.2s';
+        button.style.zIndex = '10';
+    
+        button.addEventListener('mouseover', () => {
+          button.style.backgroundColor = '#eaeef2';
+        });
+        button.addEventListener('mouseout', () => {
+          button.style.backgroundColor = '#f6f8fa';
+        });
+    
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'relative';
+        wrapper.appendChild(button);
+        wrapper.appendChild(pre.cloneNode(true));
+        pre.replaceWith(wrapper);
+    
+        button.addEventListener('click', () => {
+          navigator.clipboard.writeText(pre.innerText.trim());
+          button.innerText = '✅ Copied!';
+          setTimeout(() => button.innerText = '📋 Copy', 2000);
+        });
+      });
+    });
+  </script>  
+</head>
