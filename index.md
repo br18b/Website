@@ -1,8 +1,7 @@
 ---
 layout: home
+title: Welcome
 ---
-
-# Welcome
 
 Hi, I'm Braňo!  
 This is my personal site for my research and projects.
