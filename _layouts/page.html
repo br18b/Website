@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<main class="page-content">
+  {{ content }}
+  {% if page.scroll_gallery %}
+  <script>
+    function scrollGallery(direction) {
+      const gallery = document.getElementById('gallery');
+      const scrollAmount = gallery.querySelector('img')?.clientWidth + 10 || 160;
+      gallery.scrollBy({
+        left: scrollAmount * direction,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+  {% endif %}
+</main>

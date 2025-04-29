@@ -4,7 +4,7 @@ title: Turbulence
 permalink: /research/
 ---
 
-<div class="page-wrapper">
+<div class="page-container">
     <aside class="sticky-sidebar">
     <h3>Quick Navigation</h3>
     <ul>
@@ -18,9 +18,9 @@ permalink: /research/
         </li>
     </ul>
     </aside>
-
-    <!-- Main Content -->
-    <main>
+<!-- Main Content -->
+    <main class="main-content">
+        <h1 id="overview">Turbulence</h1>
         <h2 id="overview">Overview</h2>
         <p>
             Up above the clouds, inside swirling storms, and even across distant galaxies, <strong>turbulence</strong> is constantly shaping the universe.
