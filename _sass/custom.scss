@@ -26,15 +26,14 @@
   position: sticky;
   top: 100px;
   flex: 0 0 200px;
-  margin-left: -240px;
   font-size: 0.9em;
   padding-right: 20px;
   border-right: 1px solid #ccc; // gray vertical line
 }
 
 .sticky-sidebar h3 {
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 1.5em;
+  font-weight: normal;
   margin-bottom: 10px;
 }
 
@@ -45,11 +44,25 @@
 
 .sticky-sidebar ul ul {
   list-style-type: circle;
-  margin-left: 20px; /* <-- THIS fixes the indent! */
-  font-size: 0.9em; /* optional: make the sublist a tiny bit smaller */
-  color: #555; /* optional: slightly gray color for sub-items */
+  margin-left: 20px;
+  font-size: 0.9em;
+  color: #555;
 }
 
 .sticky-sidebar li {
   margin-bottom: 10px;
+}
+
+.page-flex {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 40px;
+}
+
+main {
+  flex: 1;
+  text-align: justify;
 }
