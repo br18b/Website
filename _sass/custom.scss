@@ -21,3 +21,26 @@
   color: #d73a49; /* GitHub red for keywords */
   font-weight: bold;
 }
+
+.sticky-sidebar {
+  position: sticky;
+  top: 100px;
+  flex: 0 0 200px;
+  margin-left: -240px;
+  font-size: 0.9em;
+}
+
+.sticky-sidebar h3 {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sticky-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sticky-sidebar li {
+  margin-bottom: 10px;
+}

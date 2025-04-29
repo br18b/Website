@@ -5,17 +5,17 @@ layout: default
 <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 40px; margin: 0;">
   
     <!-- Sticky Sidebar with Highlighted Posts -->
-    <aside style="position: sticky; top: 100px; flex: 0 0 200px; margin-left: -240px;">
+    <aside class="sticky-sidebar">
         <h3>Sticky Posts</h3>
-        <ul style="list-style-type: none; padding: 0;">
+        <ul>
             {% assign highlighted_posts = site.posts | where: "highlight", true %}
             {% for post in highlighted_posts %}
-            <li style="margin-bottom: 10px;">
+                <li>
                 <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </li>
+                </li>
             {% endfor %}
             {% if highlighted_posts == empty %}
-            <li>No highlights yet!</li>
+                <li>No highlights yet!</li>
             {% endif %}
         </ul>
     </aside>

@@ -5,19 +5,19 @@ permalink: /research/
 ---
 
 <div style="display: flex; align-items: flex-start; margin-left: -250px; margin-right: 0px;">
-    <div style="position: sticky; top: 80px; flex: 0 0 220px; margin-right: 40px;">
-        <h3>Quick Navigation</h3>
-        <ul style="list-style-type: none; padding: 0;">
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#simulations">Computer Simulations</a></li>
-            <li>
-                <a href="#density-stats">Statistics of Density</a>
-                <ul style="list-style-type: circle; margin-left: 20px;">
-                    <li><a href="#clt">Central Limit Theorem</a></li>
-                </ul>
-            </li>
+    <aside class="sticky-sidebar">
+    <h3>Quick Navigation</h3>
+    <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#simulations">Computer Simulations</a></li>
+        <li>
+        <a href="#density-stats">Statistics of Density</a>
+        <ul style="list-style-type: circle; margin-left: 20px;">
+            <li><a href="#clt">Central Limit Theorem</a></li>
         </ul>
-    </div>
+        </li>
+    </ul>
+    </aside>
     <div style="flex: 1; text-align: justify;">
         <h2 id="overview">Overview</h2>
         <p>
