@@ -36,8 +36,8 @@
   position: sticky;
   top: 0;
   left: 0;
-  margin-left: -220px;
-  width: 200px;
+  margin-left: -320px;
+  width: 300px;
   padding-right: 10px;
   font-size: 0.9em;
   border-right: 1px solid #ccc;
@@ -252,4 +252,33 @@
 
 .car-description {
   text-align: justify;
+}
+
+.plot-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 1em 0;
+}
+
+.plot-carousel img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  font-size: 2em;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.carousel-btn:hover {
+  background-color: #e0e0e0;
 }

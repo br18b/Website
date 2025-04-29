@@ -52,7 +52,7 @@ permalink: /research/
         </p>
         <figure style="text-align: center;">
             <img src="{{ site.baseurl }}/pics/density_cube_with_grid.png" alt="Turbulence simulation" width="600"/>
-            <figcaption style="font-size: smaller; color: gray;">A 3D simulation of turbulent density fields in a molecular cloud. Tiny cubes added to visualize spatial discretization.</figcaption>
+            <figcaption style="font-size: smaller; color: gray;">A 3D simulation of turbulent density fields on a discretized grid.</figcaption>
         </figure>
         <p>
             Then we unleash the laws of physics. Gravity, magnetism, shocks, turbulence - they all evolve naturally as the simulation runs. The computer calculates how each cell interacts with its neighbors, step by step, tracking the motion and behavior of the gas over thousands or millions of simulated years.
@@ -63,12 +63,9 @@ permalink: /research/
         <p>
             After enough staring at plots, arguing with our own statistics, and rerunning simulations because of a forgotten boundary condition, we sometimes find just enough order hiding inside the chaos to write a paper about it.
         </p>
-        <p>
-            It's a little like cosmic archaeology - digging through simulated clouds to understand the forces that shape the stars.
-        </p>
         <h2 id="density-stats">Turbulent Density Statistics</h2>
         <p>
-            The simulations would be useless if we only stared at the pretty pictures. Sure, the visuals are amazing - but science demands more than observation; it demands prediction and explanation.
+            The simulations would be useless if we only stared at the pretty pictures. Sure, the visuals are amazing, but science demands more than observation; it demands prediction and explanation.
         </p>
         <p>
             One of the most fundamental quantities in turbulent gas is the density field. It’s common knowledge in astrophysics that turbulent density tends to follow a <strong>log-normal distribution</strong>: logarithm of density looks statistically like a normal (Gaussian) distribution.
@@ -85,7 +82,7 @@ permalink: /research/
             $$
         </p>
         <p>
-            Through an ensemble of many shocks, density variations accumulate multiplicatively, naturally leading (via the central limit theorem (CLT) for multiplicative processes) to a log-normal behavior. If the last sentence did not make much sense, we can perform a numerical experiment on our computer using Python.
+            Through an ensemble of many shocks, density variations accumulate multiplicatively, naturally leading, via the central limit theorem (CLT) for multiplicative processes, to a log-normal behavior. If the last sentence did not make much sense, we can perform a numerical experiment on our computer using Python.
         </p>
         <h4 id="clt">Detour: Central Limit Theorem</h4>
         <p>
