@@ -7,7 +7,7 @@ layout: default
     <!-- Sticky Sidebar with Highlighted Posts -->
     <aside style="position: sticky; top: 100px; flex: 0 0 200px; margin-left: -240px;">
         <h3>Sticky Posts</h3>
-        <ul style="list-style-type: none; padding: 0; font-size: 0.9em;">
+        <ul style="list-style-type: none; padding: 0;">
             {% assign highlighted_posts = site.posts | where: "highlight", true %}
             {% for post in highlighted_posts %}
             <li style="margin-bottom: 10px;">
