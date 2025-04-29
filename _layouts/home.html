@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+<div style="display: flex; flex-direction: row; align-items: flex-start; gap: 40px; margin: 0;">
+  
+    <!-- Sticky Sidebar with Highlighted Posts -->
+    <aside style="position: sticky; top: 100px; flex: 0 0 200px; margin-left: -240px;">
+        <h3>Sticky Posts</h3>
+        <ul style="list-style-type: none; padding: 0; font-size: 0.9em;">
+            {% assign highlighted_posts = site.posts | where: "highlight", true %}
+            {% for post in highlighted_posts %}
+            <li style="margin-bottom: 10px;">
+                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+            {% if highlighted_posts == empty %}
+            <li>No highlights yet!</li>
+            {% endif %}
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main style="flex: 1; min-width: 0;">
+        <h1>{{ page.heading | default: "Welcome to my personal webpage!" }}</h1>
+        <p>Hi, I'm Braňo!<br>This is my personal site for research and projects.</p>
+
+    <h2>Explore:</h2>
+        <ul>
+            <li><a href="{{ site.baseurl }}/about/">About Me</a></li>
+            <li><a href="{{ site.baseurl }}/research/">Turbulence Research</a></li>
+            <li><a href="{{ site.baseurl }}/beamng/">BeamNG Projects</a></li>
+        </ul>
+
+        <h2>Posts</h2>
+        <ul>
+        {% for post in site.posts %}
+            <li>
+            <span style="color: gray;">{{ post.date | date: "%b %d, %Y" }}</span> –
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </main>
+
+</div>

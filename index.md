@@ -1,7 +1,10 @@
 ---
 layout: home
-title: Welcome
+title: Home
+heading: Welcome to my personal webpage!
 ---
+
+# Welcome to my webpage!
 
 Hi, I'm Braňo!  
 This is my personal site for my research and projects.
