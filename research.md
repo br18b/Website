@@ -4,7 +4,7 @@ title: Turbulence
 permalink: /research/
 ---
 
-<div style="display: flex; align-items: flex-start; margin-left: -250px; margin-right: 0px;">
+<div style="display: flex; flex-direction: row; align-items: flex-start; gap: 40px; margin: 0;">
     <aside class="sticky-sidebar">
     <h3>Quick Navigation</h3>
     <ul>

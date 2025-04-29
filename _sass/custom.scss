@@ -45,7 +45,9 @@
 
 .sticky-sidebar ul ul {
   list-style-type: circle;
-  margin-left: 20px;
+  margin-left: 20px; /* <-- THIS fixes the indent! */
+  font-size: 0.9em; /* optional: make the sublist a tiny bit smaller */
+  color: #555; /* optional: slightly gray color for sub-items */
 }
 
 .sticky-sidebar li {
