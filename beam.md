@@ -6,7 +6,7 @@ permalink: /beamng/
 
 <div class="projects-grid">
   <div class="main-intro">
-    <h2>My car mods</h2>
+    <h1>My car mods</h1>
     <p>Feel free to browse my available and work-in-progress car mods for BeamNG.drive!</p>
   </div>
 
