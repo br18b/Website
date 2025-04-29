@@ -4,7 +4,7 @@ title: Turbulence
 permalink: /research/
 ---
 
-<div class="page-flex">
+<div class="page-wrapper">
     <aside class="sticky-sidebar">
     <h3>Quick Navigation</h3>
     <ul>
@@ -111,6 +111,7 @@ permalink: /research/
 
 import matplotlib.pyplot as plt
 import os</code></pre>
+
 <p>
 Here numpy is required to generate the random samples, matplotlib for making neat plots and os for I/O. Having done that, we now proceed with the function that will generate the samples, renormalize them, create histograms and save the histograms. Thinking ahead, we know we will need several inputs: the random distribution, $n$, $N$. Additionally, we will also control the number of bins to create the resulting distribution. We can include more arguments to make plotting more modular, but ultimately, the core of the function is captured with the first 4 arguments.
 </p>

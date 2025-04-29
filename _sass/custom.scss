@@ -23,12 +23,13 @@
 }
 
 .sticky-sidebar {
-  position: sticky;
+  position: absolute;  /* Take it out of flow */
+  left: 0;
   top: 100px;
-  flex: 0 0 200px;
+  width: 200px;
   font-size: 0.9em;
   padding-right: 20px;
-  border-right: 1px solid #ccc; // gray vertical line
+  border-right: 1px solid #ccc;
 }
 
 .sticky-sidebar h3 {
@@ -53,25 +54,13 @@
   margin-bottom: 10px;
 }
 
-.page-flex {
-  display: flex;
-  align-items: flex-start;
+.page-wrapper {
+  position: relative; /* anchor for absolute sidebar */
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-  gap: 40px;
-}
-
-.page-flex main {
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.page-flex aside {
-  flex: 0 0 auto;
+  padding-left: 240px;  /* space for sidebar */
 }
 
 main {
-  flex: 1;
   text-align: justify;
 }
