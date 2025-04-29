@@ -28,6 +28,8 @@
   flex: 0 0 200px;
   margin-left: -240px;
   font-size: 0.9em;
+  padding-right: 20px;
+  border-right: 1px solid #ccc; // gray vertical line
 }
 
 .sticky-sidebar h3 {
@@ -39,6 +41,11 @@
 .sticky-sidebar ul {
   list-style-type: none;
   padding: 0;
+}
+
+.sticky-sidebar ul ul {
+  list-style-type: circle;
+  margin-left: 20px;
 }
 
 .sticky-sidebar li {
