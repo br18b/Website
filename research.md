@@ -12,9 +12,6 @@ permalink: /research/
             <li><a href="#simulations">Computer Simulations</a></li>
             <li>
                 <a href="#density-stats">Statistics of Density</a>
-                <ul>
-                    <li><a href="#clt">Central Limit Theorem</a></li>
-                </ul>
             </li>
         </ul>
     </aside>
@@ -26,9 +23,6 @@ permalink: /research/
             <li><a href="#simulations">Computer Simulations</a></li>
             <li>
                 <a href="#density-stats">Statistics of Density</a>
-                <ul>
-                    <li><a href="#clt">Central Limit Theorem</a></li>
-                </ul>
             </li>
         </ul>
     </aside>
