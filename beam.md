@@ -22,7 +22,7 @@ permalink: /beamng/
     <p>A 1960s classic Czechoslovak van, available in several variants (ambulance, police, fire, ...)</p>
   </a>
 
-  <a class="project-card" href="/your-second-project-link">
+  <a class="project-card" href="{{ site.baseurl }}/BNG/S92a/">
     <div class="status wip">Work-in-progress</div>
     <h3>Saab 92</h3>
     <div class="car-gallery">
@@ -31,7 +31,7 @@ permalink: /beamng/
         <img src="{{ site.baseurl }}/BNG/pics/Saab92_3.png" alt="Dashboard view">
         <img src="{{ site.baseurl }}/BNG/pics/Saab92_4.png" alt="Engine view">
     </div>
-    <p>1949 - 1952 two-stroke Swedish Saab.</p>
+    <p>1949 - 1957 two-stroke Swedish Saab.</p>
   </a>
 
   <!-- More cards -->
