@@ -3,7 +3,8 @@ layout: default
 ---
 
 <div class="page-container">
-    <aside class="sticky-sidebar">
+    <!-- Main Content -->
+     <aside class="sticky-sidebar desktop-only">
         <h3>Sticky Posts</h3>
         <ul>
             {% assign highlighted_posts = site.posts | where: "highlight", true %}
@@ -17,8 +18,6 @@ layout: default
             {% endif %}
         </ul>
     </aside>
-
-    <!-- Main Content -->
     <main class="main-content">
         <h1>{{ page.heading | default: "Welcome to my personal webpage!" }}</h1>
         <p>Hi, I'm Braňo!<br>This is my personal site for research and projects.</p>
@@ -31,6 +30,20 @@ layout: default
         </ul>
 
         <h2>Posts</h2>
+        <aside class="sticky-sidebar mobile-only">
+            <h3>(Sticky)</h3>
+            <ul>
+                {% assign highlighted_posts = site.posts | where: "highlight", true %}
+                {% for post in highlighted_posts %}
+                    <li>
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                    </li>
+                {% endfor %}
+                {% if highlighted_posts == empty %}
+                    <li>No highlights yet!</li>
+                {% endif %}
+            </ul>
+        </aside>
         <ul>
         {% for post in site.posts %}
             <li>
