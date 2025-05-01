@@ -352,3 +352,20 @@
 .carousel-btn:hover {
   background-color: #e0e0e0;
 }
+
+.math-mobile {
+  display: none;
+}
+
+.math-desktop {
+  display: block;
+}
+
+@media (max-width: 750px) {
+  .math-mobile {
+    display: block;
+  }
+  .math-desktop {
+    display: none;
+  }
+}
