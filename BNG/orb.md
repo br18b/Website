@@ -29,6 +29,7 @@ scroll_gallery: true
           <strong>“Some cars roll coal. The 1952 Orbitron rolls Cobalt-60.”</strong><br>
           <em>The future doesn’t smoke - it glows.</em><br>
           <strong>Irradiate the sidewalk. Assert dominance.</strong>
+          Because nothing says power like moderate radiation exposure.
         </blockquote>
       </div>
       <div class="car-stats">
@@ -68,7 +69,7 @@ scroll_gallery: true
       </p>
       <h4><strong>Premium</strong></h4>
       <p>
-        The prestige trim swaps gasoline for glowing ambition. Powered by a compact nuclear turbine, it outputs a serene 1,700 hp with a low-end torque curve measured in megajoules. It makes very little noise, but does emit a low hum and a faint greenish glow at night. <strong>Do not store pets in the trunk</strong>. Its QuadraGlide CVDrive transmission was originally designed for nuclear submarine ballast control systems, now available with leather trim. In throttle we hope. We take brake on faith. <strong>Because nothing says power like moderate radiation exposure</strong>.
+        The prestige trim swaps gasoline for glowing ambition. Powered by a compact nuclear turbine, it outputs a serene 1,700 hp with a low-end torque curve measured in megajoules. It makes very little noise, but does emit a low hum and a faint greenish glow at night. <strong>Do not store pets in the trunk</strong>. Its QuadraGlide CVDrive transmission was originally designed for nuclear submarine ballast control systems, now available with leather trim. The fusion-ready fission core powering this variant offers an impressive range of nearly half a million miles. Installed by engineers blissfully ignorant of its long-term environmental impact, the core is built to outlive every other component of the car. Centuries later (around the year 2287), its faint glow still pulses from the rusted-out remains of a once-glorious machine, irradiating the unlucky vault dweller, drawn in by the soft green light of the exposed reactor nestled in the decayed engine bay.
       </p>
       <p>
         The Orbitron wasn’t built for speed. It was built for spectacle. For the kind of people who believed the future had fins, that every driveway should glow faintly at night, and that safety was someone else’s problem. After all, why roll coal… when you can leave a legacy in isotopes?
