@@ -8,7 +8,7 @@ permalink: /about/
     <h1 id="overview">Who am I?</h1>
     <main class="main-content">
         <p>
-            Hi! I'm Braňo Rabatin - an astrophysicist and a part-time car enthusiast. Let me share some of the things I've worked on!
+            Hi! I'm Braňo - an astrophysicist and a part-time car enthusiast. Let me share some of the things I've worked on!
         </p>
         <p>
             I spend my time wrestling with supersonic turbulence and creating BeamNG car mods. I occasionally manage to convince computers to do what I want (after a passive-aggressive glaring standoff).
