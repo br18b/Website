@@ -89,7 +89,7 @@ permalink: /research/
             $$
         </p>
         <p>
-            Through an ensemble of many shocks, density variations accumulate multiplicatively, naturally leading, via the central limit theorem (CLT) for multiplicative processes, to a log-normal behavior. To see how and why, I provide some justification in my blog posts, <a href="{{ '/blog/why-gaussian-part-i/' | relative_url }}">Why Gaussian? Part I: tossing dice</a>, <a href="{{ '/blog/why-gaussian-part-ii/' | relative_url }}">Why Gaussian? Part II: continuous additive processes</a>.
+            Through an ensemble of many shocks, density variations accumulate multiplicatively, naturally leading, via the central limit theorem (CLT) for multiplicative processes, to a log-normal behavior. To see how and why, I provide some justification in my blog posts: <a href="{{ '/blog/why-gaussian-part-i/' | relative_url }}">Why Gaussian? Part I: tossing dice</a>, <a href="{{ '/blog/why-gaussian-part-ii/' | relative_url }}">Part II: continuous additive processes</a> and <a href="{{ '/blog/why-gaussian-part-iii/' | relative_url }}">Part III: not all processes are additive</a>.
         </p>
         <p>
             To be continued...
