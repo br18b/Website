@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {%- include head.html -%}
 
   <body>
-
     {%- include header.html -%}
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        {{ content }}
+        <div class="main-intro">
+          <!-- This is where your page title and description go -->
+          {{ content }}
+        </div>
+
+        {% if page.lattice %}
+          <div class="lattice-zone" style="position: relative;">
+            <canvas id="pendulum-canvas"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+            <!-- This is your actual grid of cards -->
+            <div class="projects-grid">
+              <!-- portfolio cards are written directly in beam.md -->
+              <!-- DO NOT move them here -->
+            </div>
+          </div>
+        {% endif %}
       </div>
     </main>
 
     {%- include footer.html -%}
 
+    {% if page.lattice %}
+      <script src="{{ '/assets/js/nodebeam.js' | relative_url }}"></script>
+    {% endif %}
   </body>
-
 </html>

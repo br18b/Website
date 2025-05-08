@@ -36,6 +36,9 @@ header_pages:
   - research.md
   - beam.md
 
+include:
+  - assets/js
+
 #Others
 highlighter: rouge
 markdown: kramdown

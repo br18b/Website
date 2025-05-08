@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SPH WASM Test</title>
+</head>
+<body>
+  <canvas id="c" width="1300" height="800" style="border:1px solid black;"></canvas>
+  <pre id="log">Loading...</pre>
+  <button onclick="saveParticlesFromHeap(particleView, N, floatsPerParticle)">Save Snapshot</button>
+  <!-- Load WASM runtime -->
+  <script src = "sph.js?v=" + Date.now()></script>
+
+  <!-- Now safely define Module behavior -->
+  <script>
+        const particles = []; // JS-side container
+        let particleView; let intView;
+        let ptr;
+        let N;
+        const floatsPerParticle = 11;
+        const xmin = 50; const xmax = 1050;
+        const ymin = 50; const ymax = 550;
+        const box = { x0: xmin, y0: ymin, x1: xmax, y1: ymax };
+        box.Lx = box.x1 - box.x0;
+        box.Ly = box.y1 - box.y0;
+
+        relax_trial = false;
+        load_snapshot = true;
+        grayscale_col = false;
+
+        // precompute color palette
+        let T_threshold = 0.5;
+        let Ncol = 1000;
+        const colorCache = new Array(Ncol + 1);
+        /*for (let i = 0; i < 256; i++) {
+            const r = i;
+            const g = Math.floor(128 - i / 2);
+            const b = 255 - i;
+            colorCache[i] = `rgb(${r},${g},${b})`;
+        }*/
+        for (let T = 0; T <= Ncol; T++) {
+            let r = 255, g = 255, b = 255; a = 0; // default: white
+            let d = Ncol * T_threshold / 2;
+            if (grayscale_col) {
+                colorCache[T] = `rgb(0,0,0)`;
+                continue;
+            }
+            if (T <= d) {
+                r = 0;
+                g = 0;
+                b = 255;
+                a = 1;
+            } else if (T <= 2 * d) {
+                const f = (T - d) / d;
+                r = g = Math.floor(255 * f);
+                b = 255;
+                a = 1 - f;
+            } else if (T >= Ncol - d) {
+                r = 255;
+                g = 0;
+                b = 0;
+                a = 1;
+            } else if (T >= Ncol - 2 * d) {
+                const f = (T - Ncol + 2 * d) / d;
+                g = b = Math.floor(255 * (1 - f));
+                r = 255;
+                a = f;
+            } else {
+                // Mid temps — invisible
+                colorCache[T] = null;
+                continue;
+            }
+            colorCache[T] = `rgba(${r},${g},${b},${a})`;
+        }
+
+        let params = {
+            N_desired: 25000, // 15k
+            dt: 0.15, // 0.3
+            maxSubSteps: 1,
+            cellSize: 10,
+            boundarySpacing: 3,
+            boundaryLayers: 3,
+            g: -0.1,
+            k: 200,
+            mu: 35,
+            mass: 1,
+            restDensity: 0.55, // 0.6
+            T0: 50,
+            alpha: 0.1,
+            T_high: 100,
+            T_low: 0,
+            initialTemperature: 50,
+            T_diff: 0.01,
+            xmin, xmax, ymin, ymax
+        };
+
+        if (relax_trial) {
+            params.T_low = params.T0;
+            params.T_high = params.T0;
+        }
+
+        if (!load_snapshot) {
+            console.log("🧪 Load snapshot disabled; skipping snapshot load.");
+            createPackedParticles(params.N_desired);
+            spawnBoundary(params.boundaryLayers);
+            runSimulation();
+        } else {
+            fetch("sph_snapshot.json?v=" + Date.now())
+                .then(response => {
+                    if (!response.ok) throw new Error("Snapshot not found");
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("✅ Loaded sph_snapshot.json");
+                    loadParticlesFromSnapshot(data);
+                    runSimulation();
+                })
+                .catch(err => {
+                    console.warn("⚠️ No snapshot found, generating new particles...");
+                    createPackedParticles(params.N_desired);
+                    spawnBoundary(params.boundaryLayers);
+                    runSimulation();
+                });
+        }
+
+        function getCellIndex(x, y) {
+            const cs = params.cellSize; // same as cellSize
+            return {
+                ix: Math.floor(x / cs),
+                iy: Math.floor(y / cs)
+            };
+        }
+
+        function spawnBoundary(layers) {
+            let layer = 1;
+            let xmin = box.x0;
+            let xmax = box.x1;
+            let ymin = box.y0;
+            let ymax = box.y1;
+
+            while (layer <= layers) {
+                for (let x = xmin; x < xmax; x += params.boundarySpacing) { // top
+                    let y = ymin;
+                    const { ix, iy } = getCellIndex(x, y);
+                    particles.push({
+                        x, y, vx: 0, vy: 0,
+                        ax: 0, ay: 0,
+                        rho: 0, p: 0,
+                        T: params.T_low,
+                        boundary: true,
+                        lid_top: true
+                    });
+                }
+                for (let y = ymin; y < ymax; y += params.boundarySpacing) { // right
+                    let x = xmax;
+                    const { ix, iy } = getCellIndex(x, y);
+                    particles.push({
+                        x, y, vx: 0, vy: 0,
+                        ax: 0, ay: 0,
+                        rho: 0, p: 0,
+                        T: params.initialTemperature,
+                        boundary: true
+                    });
+                }
+                for (let x = xmax; x > xmin; x -= params.boundarySpacing) { // bottom
+                    let y = ymax;
+                    const { ix, iy } = getCellIndex(x, y);
+                    particles.push({
+                        x, y, vx: 0, vy: 0,
+                        ax: 0, ay: 0,
+                        rho: 0, p: 0,
+                        T: params.T_high,
+                        boundary: true,
+                        lid_bottom: true
+                    });
+                }
+                for (let y = ymax; y > ymin; y -= params.boundarySpacing) { // left
+                    let x = xmin;
+                    const { ix, iy } = getCellIndex(x, y);
+                    particles.push({
+                        x, y, vx: 0, vy: 0,
+                        ax: 0, ay: 0,
+                        rho: 0, p: 0,
+                        T: params.initialTemperature,
+                        boundary: true
+                    });
+                }
+
+                xmin -= params.boundarySpacing / 2;
+                xmax += params.boundarySpacing / 2;
+                ymin -= params.boundarySpacing / 2;
+                ymax += params.boundarySpacing / 2;
+                layer++;
+            }
+
+            // Add corner fixers
+            const fixers = [
+                [box.x0 + params.boundarySpacing / 2, box.y0 + params.boundarySpacing / 2],
+                [box.x1 - params.boundarySpacing / 2, box.y0 + params.boundarySpacing / 2],
+                [box.x0 + params.boundarySpacing / 2, box.y1 - params.boundarySpacing / 2],
+                [box.x1 - params.boundarySpacing / 2, box.y1 - params.boundarySpacing / 2]
+            ];
+            for (const [x, y] of fixers) {
+                particles.push({
+                    x, y, vx: 0, vy: 0, T: params.initialTemperature,
+                    boundary: true
+                });
+            }
+        }
+
+        function createPackedParticles(N_desired = 2000) {
+            const Lx = box.x1 - box.x0;
+            const Ly = box.y1 - box.y0;
+
+            const dx = Math.sqrt((2 * Lx * Ly) / (Math.sqrt(3) * N_desired));
+            const dy = dx * Math.sqrt(3) / 2;
+
+            const xmin = box.x0 + dx;
+            const xmax = box.x1 - dx;
+            const ymin = box.y0 + dx;
+            const ymax = box.y1 - dx;
+
+            let row = 0;
+            for (let y = ymax; y >= ymin; y -= dy, row++) {
+                const offset = (row % 2 === 0) ? 0 : dx / 2;
+                for (let x = xmin + offset; x <= xmax; x += dx) {
+                    particles.push({
+                        x, y,
+                        vx: 0, vy: 0,
+                        ax: 0, ay: 0,
+                        rho: 0, p: 0,
+                        T: params.initialTemperature,
+                        boundary: false
+                    });
+                }
+            }
+        }
+
+        function saveParticlesFromHeap(particleView, N, floatsPerParticle) {
+            const data = [];
+
+            for (let i = 0; i < N; i++) {
+                const base = i * floatsPerParticle;
+                data.push({
+                    x: particleView[base + 0],
+                    y: particleView[base + 1],
+                    vx: particleView[base + 2],
+                    vy: particleView[base + 3],
+                    ax: particleView[base + 4],
+                    ay: particleView[base + 5],
+                    rho: particleView[base + 6],
+                    p:  particleView[base + 7],
+                    T:  particleView[base + 8],
+                    boundary: !!(intView[base + 9] & 1),
+                    lid_top:  !!(intView[base + 9] & 2),
+                    lid_bottom:  !!(intView[base + 9] & 4)
+                });
+            }
+
+            const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "sph_snapshot.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function loadParticlesFromSnapshot(data) {
+            particles.length = 0;
+            for (const p of data) {
+                let newT = p.T;
+                if (p.lid_top) newT = params.T_low;
+                if (p.lid_bottom) newT = params.T_high;
+                particles.push({
+                    x: p.x,
+                    y: p.y,
+                    vx: p.vx,
+                    vy: p.vy,
+                    ax: p.ax,
+                    ay: p.ay,
+                    rho: p.rho,
+                    p: p.p,
+                    T: newT,
+                    boundary: p.boundary,
+                    lid_top: p.lid_top,
+                    lid_bottom: p.lid_bottom
+                });
+            }
+        }
+
+        // The global function `Module` is created by sph.js because of -s MODULARIZE=1
+        function runSimulation() {
+            Module().then(mod => {
+                console.log("mod.HEAPU8:", mod.HEAPU8);
+                function setFlags(index, { boundary = false, lid_top = false, lid_bottom = false }) {
+                    let flags = 0;
+                    if (boundary) flags |= 1;
+                    if (lid_top)  flags |= 2;
+                    if (lid_bottom)  flags |= 4;
+                    intView[index * floatsPerParticle + 9] = flags;
+                }
+                console.log("✅ WASM Module initialized");
+                if (particles.length == 0) {
+                    createPackedParticles(params.N_desired);  // or however many you want
+                    spawnBoundary(params.boundaryLayers);
+                    console.log("✅ Generated Fluid + Boundary Particles");
+                }
+                const setParams = mod.cwrap('set_simulation_params', null, [
+                    'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'
+                    ]);
+                const fillGrid = mod.cwrap('fill_grid', null, ['number', 'number']);
+                const computeStep = mod.cwrap('compute_density_forces', null, ['number', 'number']);
+                const integrate = mod.cwrap('integrate', null, ['number', 'number', 'number']);
+                const initW = mod.cwrap('init_W_lookup', null, []);
+
+                N = particles.length;
+                const particleSize = 4 * floatsPerParticle;
+
+                ptr = mod._malloc(N * particleSize);
+
+                setParams(
+                    params.restDensity,
+                    params.cellSize,
+                    params.mass,
+                    params.mu,
+                    params.g,
+                    params.k,
+                    params.T0,
+                    params.T_diff,
+                    params.alpha,
+                    params.xmin,
+                    params.xmax,
+                    params.ymin,
+                    params.ymax
+                );
+
+                initW();
+
+                //particleView = Module.HEAPF32.subarray(ptr >> 2, (ptr >> 2) + N * floatsPerParticle); // works
+                //particleView = new Float32Array(Module.HEAPU8.buffer, ptr, N * floatsPerParticle); // never worked
+                //intView = Module.HEAP32.subarray(ptr >> 2, (ptr >> 2) + N * floatsPerParticle); // doesn't
+                //intView = new Int32Array(Module.HEAPU8.buffer, ptr, N * floatsPerParticle); // never worked
+                //particleView = new Float32Array(mod.HEAPU8.buffer, ptr, N * floatsPerParticle); // also doesn't work
+                //intView      = new Int32Array(mod.HEAPU8.buffer, ptr, N * floatsPerParticle); // also doesn't work
+                particleView = mod.HEAPF32.subarray(ptr >> 2, (ptr >> 2) + N * floatsPerParticle);
+                intView      = mod.HEAP32.subarray(ptr >> 2, (ptr >> 2) + N * floatsPerParticle);
+
+                // Copy into WASM memory
+                for (let i = 0; i < N; i++) {
+                    const base = i * floatsPerParticle;
+                    const p = particles[i];
+                    particleView[base + 0] = p.x;
+                    particleView[base + 1] = p.y;
+                    particleView[base + 2] = p.vx;
+                    particleView[base + 3] = p.vy;
+                    particleView[base + 4] = p.ax; // ax
+                    particleView[base + 5] = p.ay; // ay
+                    particleView[base + 6] = p.rho; // rho
+                    particleView[base + 7] = p.p; // p
+                    particleView[base + 8] = p.T;
+                    setFlags(i, { boundary: p.boundary, lid_top: p.lid_top, lid_bottom: p.lid_bottom });
+                    intView[base + 10] = -1;
+                }
+
+                const simXmin = xmin - 2 * params.boundarySpacing * params.boundaryLayers;
+                const simYmin = ymin - 2 * params.boundarySpacing * params.boundaryLayers;
+                const simXmax = xmax + 2 * params.boundarySpacing * params.boundaryLayers;
+                const simYmax = ymax + 2 * params.boundarySpacing * params.boundaryLayers;
+                mod._setup_grid(simXmin, simYmin, simXmax, simYmax, params.cellSize); // canvas bounds and h = 20
+                fillGrid(ptr, N);  // put particles into spatial grid
+                computeStep(ptr, N);
+
+                // --- VISUALIZATION ---
+                const canvas = document.getElementById("c");
+                const ctx = canvas.getContext("2d");
+
+                function render() {
+                    for (let i = 0; i < params.maxSubSteps; i++) {
+                        computeStep(ptr, N);
+                        integrate(ptr, N, params.dt);
+                        //fillGrid(ptr, N); // update grid
+                    }
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = 0; i < N; i++) {
+                        const base = i * floatsPerParticle;
+                        const x = particleView[base + 0];
+                        const y = particleView[base + 1];
+                        const T = particleView[base + 8];
+                        let r = 6 / Math.sqrt(particleView[base + 6]);
+
+                        let tau = 0.5;
+                        if (!relax_trial) {
+                            if (T < params.T0) {
+                                tau = 0.5 * (T - params.T_low) / (params.T0 - params.T_low);
+                            }
+                            else {
+                                tau = 0.5 + 0.5 * (T - params.T0) / (params.T_high - params.T0);
+                            }
+                        }
+                        const Tid = Math.round(Ncol * tau);
+                        let color = colorCache[Tid];
+                        //let color2 = colorCache2[Tid];
+                        if (!!(intView[base + 9] & 1)) {
+                            r = 5;
+                            color = 'gray';
+                        }
+
+                        if (!color) continue; // skip mid-temp particles
+
+                        //const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
+                        //gradient.addColorStop(0, color);
+                        //gradient.addColorStop(1, color2);
+
+                        ctx.fillStyle = color;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+                        ctx.fill();
+                    }
+
+                    requestAnimationFrame(render);
+                }
+
+                render();
+            }).catch(err => {
+                console.error("🚨 Module failed to initialize:", err);
+                document.getElementById("log").textContent = "Error loading module.";
+            });
+        }
+
+    </script>  
+</body>
+</html>

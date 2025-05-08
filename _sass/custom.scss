@@ -1,3 +1,21 @@
+#pendulum-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto;
+  background: transparent;
+}
+
+.canvas-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;          // allow it to expand
+  min-height: 100px;     // if necessary, force nonzero height
+}
 /* Code highlighting override */
 .highlight {
   background: #f6f8fa;
