@@ -28,6 +28,9 @@ permalink: /research/
     </aside>
 <!-- Main Content -->
     <main class="main-content">
+        <p>
+            Check out this awesome <a href="{{ '/SPH_demo/hydro_sph_WASM.html' | relative_url }}">SPH demo</a> (lava lamp)!
+        </p>
         <h2 id="overview">Overview</h2>
         <p>
             Up above the clouds, inside swirling storms, and even across distant galaxies, <strong>turbulence</strong> is constantly shaping the universe.
