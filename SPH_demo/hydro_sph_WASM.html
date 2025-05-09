@@ -19,7 +19,7 @@
         let N;
         const floatsPerParticle = 11;
         const xmin = 50; const xmax = 1050;
-        const ymin = 50; const ymax = 550;
+        const ymin = 50; const ymax = 350;
         const box = { x0: xmin, y0: ymin, x1: xmax, y1: ymax };
         box.Lx = box.x1 - box.x0;
         box.Ly = box.y1 - box.y0;
@@ -27,6 +27,8 @@
         relax_trial = false;
         load_snapshot = true;
         grayscale_col = false;
+        inject = true;
+        const injectionRate = 0;
 
         // precompute color palette
         let T_threshold = 0.5;
@@ -46,23 +48,27 @@
                 continue;
             }
             if (T <= d) {
+                const f = T / d;
                 r = 0;
-                g = 0;
+                g = 128;
                 b = 255;
                 a = 1;
             } else if (T <= 2 * d) {
                 const f = (T - d) / d;
-                r = g = Math.floor(255 * f);
+                r = Math.floor(255 * f);
+                g = Math.floor(128 + 128 * f);
                 b = 255;
                 a = 1 - f;
             } else if (T >= Ncol - d) {
+                const f = (T - Ncol + d) / d;
                 r = 255;
-                g = 0;
+                g = 96;
                 b = 0;
                 a = 1;
             } else if (T >= Ncol - 2 * d) {
                 const f = (T - Ncol + 2 * d) / d;
-                g = b = Math.floor(255 * (1 - f));
+                b = Math.floor(255 * (1 - f));
+                g = Math.floor(96 + (255 - 96) * (1 - f));
                 r = 255;
                 a = f;
             } else {
@@ -74,23 +80,25 @@
         }
 
         let params = {
-            N_desired: 25000, // 15k
-            dt: 0.15, // 0.3
+            N_desired: 30000, // 15k
+            N_neighbor: 10,
+            dt: 0.5, // 0.3
             maxSubSteps: 1,
-            cellSize: 10,
-            boundarySpacing: 3,
+            cellSize: 50,
+            maxCellSize: 50,
+            boundarySpacing: 2,
             boundaryLayers: 3,
-            g: -0.1,
-            k: 200,
-            mu: 35,
+            g: -20,
+            k: 3,
+            mu: 0.1, // 35
             mass: 1,
-            restDensity: 0.55, // 0.6
+            restDensity: 0.55, // gets overriden with whatever gets calculated for ideal filling density
+            fillFactor: 1.75,
             T0: 50,
-            alpha: 0.1,
+            alpha: 0.001,
             T_high: 100,
             T_low: 0,
-            initialTemperature: 50,
-            T_diff: 0.01,
+            T_diff: 0.3,
             xmin, xmax, ymin, ymax
         };
 
@@ -146,7 +154,7 @@
                         x, y, vx: 0, vy: 0,
                         ax: 0, ay: 0,
                         rho: 0, p: 0,
-                        T: params.T_low,
+                        T: params.T0,
                         boundary: true,
                         lid_top: true
                     });
@@ -158,7 +166,7 @@
                         x, y, vx: 0, vy: 0,
                         ax: 0, ay: 0,
                         rho: 0, p: 0,
-                        T: params.initialTemperature,
+                        T: params.T0,
                         boundary: true
                     });
                 }
@@ -169,7 +177,7 @@
                         x, y, vx: 0, vy: 0,
                         ax: 0, ay: 0,
                         rho: 0, p: 0,
-                        T: params.T_high,
+                        T: params.T0,
                         boundary: true,
                         lid_bottom: true
                     });
@@ -181,7 +189,7 @@
                         x, y, vx: 0, vy: 0,
                         ax: 0, ay: 0,
                         rho: 0, p: 0,
-                        T: params.initialTemperature,
+                        T: params.T0,
                         boundary: true
                     });
                 }
@@ -202,7 +210,7 @@
             ];
             for (const [x, y] of fixers) {
                 particles.push({
-                    x, y, vx: 0, vy: 0, T: params.initialTemperature,
+                    x, y, vx: 0, vy: 0, T: params.T0,
                     boundary: true
                 });
             }
@@ -221,6 +229,7 @@
             const ymax = box.y1 - dx;
 
             let row = 0;
+            let Nprev = particles.length;
             for (let y = ymax; y >= ymin; y -= dy, row++) {
                 const offset = (row % 2 === 0) ? 0 : dx / 2;
                 for (let x = xmin + offset; x <= xmax; x += dx) {
@@ -229,11 +238,16 @@
                         vx: 0, vy: 0,
                         ax: 0, ay: 0,
                         rho: 0, p: 0,
-                        T: params.initialTemperature,
+                        T: params.T0,
                         boundary: false
                     });
                 }
             }
+            params.restDensity = (particles.length - Nprev) / ((xmax-xmin) * (ymax-ymin)) / params.fillFactor;
+            params.cellSize = Math.sqrt(params.N_neighbor / params.restDensity / 3.1415);
+            params.maxCellSize = params.cellSize * 2;
+            params.boundarySpacing = 1 / Math.sqrt(params.restDensity);
+            console.log("Rest density:", params.restDensity, "Calculated kernel size:", params.cellSize, "Calculated boundary spacing:", params.boundarySpacing);
         }
 
         function saveParticlesFromHeap(particleView, N, floatsPerParticle) {
@@ -269,10 +283,15 @@
 
         function loadParticlesFromSnapshot(data) {
             particles.length = 0;
+            let yrange_min = 1e10;
+            let yrange_max = -1e10;
+            let Ncount = 0;
             for (const p of data) {
                 let newT = p.T;
-                if (p.lid_top) newT = params.T_low;
-                if (p.lid_bottom) newT = params.T_high;
+                if (inject) {
+                    if (p.lid_top) newT = params.T_low;
+                    if (p.lid_bottom) newT = params.T_high;
+                }
                 particles.push({
                     x: p.x,
                     y: p.y,
@@ -287,7 +306,26 @@
                     lid_top: p.lid_top,
                     lid_bottom: p.lid_bottom
                 });
+                yrange_min = Math.min(yrange_min, p.y);
+                yrange_max = Math.max(yrange_max, p.y);
+                if (!p.boundary) Ncount++;
             }
+            params.restDensity = Ncount / ((xmax-xmin) * (ymax-ymin)) / params.fillFactor;
+            params.cellSize = Math.sqrt(params.N_neighbor / params.restDensity / 3.1415);
+            params.maxCellSize = params.cellSize * 2;
+            params.boundarySpacing = 1 / Math.sqrt(params.restDensity);
+            console.log("Rest density:", params.restDensity, "Calculated kernel size:", params.cellSize, "Calculated boundary spacing:", params.boundarySpacing);
+            let midpoint = 0.8 * yrange_min + 0.2 * yrange_max;
+            /*for (let p of particles) {
+                if (!p.boundary && p.y < midpoint) p.T = params.T_low;
+                if (!p.boundary && p.y > midpoint) p.T = params.T_high;
+            }*/
+            /*for (let p of particles) {
+                const dx = p.x - 500;
+                const dy = p.y - 100;
+                if (dx * dx + dy * dy < 400) p.T = params.T_low;
+                else p.T = params.T0;
+            }*/
         }
 
         // The global function `Module` is created by sph.js because of -s MODULARIZE=1
@@ -376,21 +414,47 @@
                 const canvas = document.getElementById("c");
                 const ctx = canvas.getContext("2d");
 
+                // create temperature contrast
+                function injectHeat() {
+                    for (let i = 0; i < N; i++) {
+                        const base = i * floatsPerParticle;
+                        const x = particleView[base + 0];
+                        const y = particleView[base + 1];
+                        if (y < box.y0 + box.Ly / 2) {
+                            particleView[base + 8] = particleView[base + 8] - (particleView[base + 8] - params.T_low) * injectionRate;
+                        }
+                        if (y > box.y1 - box.Ly / 2) {
+                            particleView[base + 8] = particleView[base + 8] - (particleView[base + 8] - params.T_high) * injectionRate;
+                        }
+                        //console.log(y,box.y0);
+                    }
+                }
+
                 function render() {
                     for (let i = 0; i < params.maxSubSteps; i++) {
+                        if (inject) injectHeat();
                         computeStep(ptr, N);
                         integrate(ptr, N, params.dt);
                         //fillGrid(ptr, N); // update grid
                     }
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+                    let pmin = 100000;
+                    let pmax = -100000;
+                    for (let i = 0; i < N; i++) {
+                        const base = i * floatsPerParticle;
+                        const p = particleView[base + 7];
+                        pmin = Math.min(pmin, p);
+                        pmax = Math.max(pmax, p);
+                    }
+                    //console.log("pressure, min:",pmin,"max:",pmax)
                     for (let i = 0; i < N; i++) {
                         const base = i * floatsPerParticle;
                         const x = particleView[base + 0];
                         const y = particleView[base + 1];
+                        const p = particleView[base + 7];
                         const T = particleView[base + 8];
-                        let r = 6 / Math.sqrt(particleView[base + 6]);
+                        let r = 5 / particleView[base + 6];
 
                         let tau = 0.5;
                         if (!relax_trial) {
@@ -403,6 +467,8 @@
                         }
                         const Tid = Math.round(Ncol * tau);
                         let color = colorCache[Tid];
+                        let pnorm = 255 * (Math.log(p) - Math.log(pmin)) / (Math.log(pmax) - Math.log(pmin));
+                        //color = `rgb(${pnorm},0,0)`;
                         //let color2 = colorCache2[Tid];
                         if (!!(intView[base + 9] & 1)) {
                             r = 5;
@@ -417,7 +483,7 @@
 
                         ctx.fillStyle = color;
                         ctx.beginPath();
-                        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+                        ctx.arc(x, y, r, 0, 2 * Math.PI);
                         ctx.fill();
                     }
 

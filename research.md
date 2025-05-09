@@ -29,7 +29,7 @@ permalink: /research/
 <!-- Main Content -->
     <main class="main-content">
         <p>
-            Check out this awesome <a href="{{ '/SPH_demo/hydro_sph_WASM.html' | relative_url }}">SPH demo</a> (lava lamp)!
+            Check out this awesome <a href="{{ '/SPH_demo/hydro_sph_WASM.html' | relative_url }}">SPH demo of Rayleigh-Benard instability</a> (violent lava lamp)!
         </p>
         <h2 id="overview">Overview</h2>
         <p>
