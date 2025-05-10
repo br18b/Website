@@ -313,16 +313,17 @@ extern "C" {
     }
     
     EMSCRIPTEN_KEEPALIVE
-    void integrate(Particle* particles, int N, float dt_max) {
-        float dt = dt_max;
+    void integrate(Particle* particles, int N, float* dt_max_ptr) {
+        float dt = *dt_max_ptr;
         if (vmax > 0) {
             dt = std::min(dt, cfl * h / vmax);
         }
         if (amax > 0) {
             dt = std::min(dt, cacc * std::sqrt(h / amax));
         }
-        if (dt > dt_prev) dt = 0.1 * dt + 0.9 * dt_prev;
+        if (dt > dt_prev) dt = 0.5 * dt + 0.5 * dt_prev;
         dt_prev = dt;
+        *dt_max_ptr = dt;
         mu -= (mu - mu_target) * dt * mu_relax;
         //printf("current mu: %f\n", mu);
         //fflush(stdout);
