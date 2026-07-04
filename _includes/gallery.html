@@ -1,0 +1,11 @@
+{% if include.images %}
+<div class="scroll-gallery-container" data-gallery>
+  <button class="scroll-btn scroll-btn--left" type="button" data-gallery-prev aria-label="Scroll gallery left">&#8592;</button>
+  <div class="scroll-gallery">
+    {% for image in include.images %}
+      <img src="{{ image.src | relative_url }}" alt="{{ image.alt | default: 'Gallery image' | escape }}">
+    {% endfor %}
+  </div>
+  <button class="scroll-btn scroll-btn--right" type="button" data-gallery-next aria-label="Scroll gallery right">&#8594;</button>
+</div>
+{% endif %}

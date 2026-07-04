@@ -1,0 +1,8 @@
+<section class="hero">
+  <p class="eyebrow">{{ include.eyebrow | default: 'Personal website' }}</p>
+  <h1>{{ include.title | default: page.title }}</h1>
+  {% if include.subtitle %}<p class="hero__subtitle">{{ include.subtitle }}</p>{% endif %}
+  {% if include.actions %}
+    <div class="hero__actions">{{ include.actions }}</div>
+  {% endif %}
+</section>

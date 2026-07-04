@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<article class="project-page">
+  <header class="project-hero">
+    {% if page.category %}<p class="eyebrow">{{ page.category }}</p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="project-hero__summary">{{ page.summary }}</p>{% endif %}
+    {% if page.status %}<span class="status {{ page.status_class | default: 'wip' }}">{{ page.status }}</span>{% endif %}
+  </header>
+
+  {% include gallery.html images=page.images %}
+
+  <div class="project-content-grid">
+    <div class="prose project-copy">
+      {{ content }}
+    </div>
+    {% include stats.html title="Stats" stats=page.stats groups=page.stat_groups %}
+  </div>
+</article>

@@ -1,0 +1,10 @@
+.math-mobile { display: none; }
+.math-desktop { display: block; }
+
+@media (max-width: 750px) {
+  .math-mobile { display: block; }
+  .math-desktop { display: none; }
+}
+
+.u-muted { color: var(--muted); }
+.u-center { text-align: center; }

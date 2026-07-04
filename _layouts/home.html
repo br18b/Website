@@ -2,56 +2,31 @@
 layout: default
 ---
 
-<div class="page-container">
-    <!-- Main Content -->
-     <aside class="sticky-sidebar desktop-only">
-        <h3>Sticky Posts</h3>
-        <ul>
-            {% assign highlighted_posts = site.posts | where: "highlight", true %}
-            {% for post in highlighted_posts %}
-                <li>
-                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-                </li>
-            {% endfor %}
-            {% if highlighted_posts == empty %}
-                <li>No highlights yet!</li>
-            {% endif %}
-        </ul>
-    </aside>
-    <main class="main-content">
-        <h1>{{ page.heading | default: "Welcome to my personal webpage!" }}</h1>
-        <p>Hi, I'm Braňo!<br>This is my personal site for research and projects.</p>
+{% capture hero_actions %}
+  <a class="button" href="{{ '/research/' | relative_url }}">Research</a>
+  <a class="button button--secondary" href="{{ '/beamng/' | relative_url }}">Projects</a>
+{% endcapture %}
 
-    <h2>Explore:</h2>
-        <ul>
-            <li><a href="{{ site.baseurl }}/about/">About Me</a></li>
-            <li><a href="{{ site.baseurl }}/research/">Turbulence Research</a></li>
-            <li><a href="{{ site.baseurl }}/beamng/">BeamNG Projects</a></li>
-        </ul>
+{% include hero.html
+  eyebrow="Astrophysics · data · simulations"
+  title=page.heading
+  subtitle="I'm a physicist-turned-data analyst with a soft spot for simulations, statistics, and messy systems that look hopelessly chaotic until poked just the right way. This site collects my turbulence research, visual explainers, coding notes, and BeamNG projects."
+  actions=hero_actions
+%}
 
-        <h2>Posts</h2>
-        <aside class="sticky-sidebar mobile-only">
-            <h3>(Sticky)</h3>
-            <ul>
-                {% assign highlighted_posts = site.posts | where: "highlight", true %}
-                {% for post in highlighted_posts %}
-                    <li>
-                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-                    </li>
-                {% endfor %}
-                {% if highlighted_posts == empty %}
-                    <li>No highlights yet!</li>
-                {% endif %}
-            </ul>
-        </aside>
-        <ul>
-        {% for post in site.posts %}
-            <li>
-            <span style="color: gray;">{{ post.date | date: "%b %d, %Y" }}</span> –
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </li>
-        {% endfor %}
-        </ul>
-    </main>
+<section class="section-grid" aria-label="Site sections">
+  {% include card.html title="Research" url="/research/" label="Physics" text="Supersonic turbulence, density statistics, simulations, and the strange beauty hiding inside chaotic flows." %}
+  {% include card.html title="Projects" url="/beamng/" label="BeamNG" text="Vehicle mods, concept cars, interactive simulations, and the bits of code that make them move." %}
+  {% include card.html title="Writing" url="/#posts" label="Posts" text="Explainers and notes on statistics, simulations, and whatever technical rabbit hole is currently winning." %}
+</section>
 
-</div>
+<section id="posts" class="home-section" data-post-filter-scope>
+  <div class="section-heading section-heading--with-actions">
+    <div>
+      <p class="eyebrow">Latest writing</p>
+      <h2>Posts</h2>
+    </div>
+    {% include post-filter-controls.html %}
+  </div>
+  {% include post-list.html posts=site.posts %}
+</section>

@@ -1,0 +1,13 @@
+{% if include.url %}
+<a class="card card-link" href="{{ include.url | relative_url }}">
+  {% if include.label %}<p class="card__label">{{ include.label }}</p>{% endif %}
+  <h3 class="card-title">{{ include.title }}</h3>
+  {% if include.text %}<p>{{ include.text }}</p>{% endif %}
+</a>
+{% else %}
+<article class="card">
+  {% if include.label %}<p class="card__label">{{ include.label }}</p>{% endif %}
+  <h3 class="card-title">{{ include.title }}</h3>
+  {% if include.text %}<p>{{ include.text }}</p>{% endif %}
+</article>
+{% endif %}

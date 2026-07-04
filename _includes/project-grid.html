@@ -1,0 +1,6 @@
+{% assign projects = include.projects | sort: 'sort_order' %}
+<div class="projects-grid">
+  {% for project in projects %}
+    {% include project-card.html project=project %}
+  {% endfor %}
+</div>

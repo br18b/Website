@@ -1,0 +1,13 @@
+{% assign project = include.project %}
+<a class="project-card" href="{{ project.url | relative_url }}">
+  {% if project.status %}<span class="status {{ project.status_class | default: 'wip' }}">{{ project.status }}</span>{% endif %}
+  <h3 class="project-card__title card-title">{{ project.title }}</h3>
+  {% if project.cover_images %}
+    <div class="project-card__images">
+      {% for image in project.cover_images limit:4 %}
+        <img src="{{ image.src | relative_url }}" alt="{{ image.alt | default: project.title | escape }}">
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+</a>

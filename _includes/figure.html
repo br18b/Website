@@ -1,0 +1,5 @@
+{% assign align = include.align | default: 'center' %}
+<figure class="figure figure--{{ align }}{% if include.class %} {{ include.class }}{% endif %}">
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt | default: include.caption | escape }}"{% if include.width %} style="--figure-width: {{ include.width }};"{% endif %}>
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

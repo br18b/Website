@@ -1,0 +1,24 @@
+{% if include.stats or include.groups %}
+<aside class="stats-box">
+  {% if include.title %}<h2>{{ include.title }}</h2>{% endif %}
+
+  {% if include.stats %}
+    <ul>
+      {% for item in include.stats %}
+        <li><strong>{{ item[0] }}:</strong> {{ item[1] }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if include.groups %}
+    {% for group in include.groups %}
+      <h3>{{ group.title }}</h3>
+      <ul>
+        {% for item in group.items %}
+          <li><strong>{{ item.label }}:</strong> {{ item.value }}</li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  {% endif %}
+</aside>
+{% endif %}

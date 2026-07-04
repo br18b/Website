@@ -1,0 +1,15 @@
+<div class="post-list" data-post-list>
+  {% for post in include.posts %}
+    {% assign preview = post.summary | default: post.description | default: post.excerpt %}
+    {% assign is_featured = post.featured | default: false %}
+
+    <a class="post-card{% if is_featured %} post-card--featured{% endif %}" href="{{ post.url | relative_url }}" data-post-featured="{{ is_featured }}">
+      <p class="post-card__date">{{ post.date | date: '%b %d, %Y' }}</p>
+      <h3 class="card-title">{{ post.title }}</h3>
+
+      {% if preview %}
+        <p>{{ preview | strip_html | strip_newlines | truncate: 180 }}</p>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>

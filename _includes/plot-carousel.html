@@ -1,0 +1,18 @@
+{% assign values = include.values | split: ',' %}
+{% assign ext = include.ext | default: 'png' %}
+{% assign first_value = values[0] | strip %}
+{% assign first_src = include.folder | append: '/' | append: include.prefix | append: first_value | append: '.' | append: ext %}
+<div class="plot-carousel" data-plot-carousel>
+  <button class="carousel-btn" type="button" data-plot-prev aria-label="Previous plot">&#8592;</button>
+  <figure class="plot-carousel__figure">
+    <img data-plot-image
+         data-folder="{{ include.folder | relative_url }}"
+         data-prefix="{{ include.prefix }}"
+         data-ext="{{ ext }}"
+         data-values="{{ include.values }}"
+         src="{{ first_src | relative_url }}"
+         alt="{{ include.alt | default: include.caption | default: 'Plot carousel' | escape }}">
+    {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+  </figure>
+  <button class="carousel-btn" type="button" data-plot-next aria-label="Next plot">&#8594;</button>
+</div>
