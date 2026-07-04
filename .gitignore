@@ -1,21 +1,38 @@
-# Jekyll output and caches
+# Jekyll build/cache output
 _site/
-.sass-cache/
 .jekyll-cache/
-.jekyll-metadata
-
-# Dependencies
+.sass-cache/
+.bundle/
 vendor/
+node_modules/
 
-# Python scripts and notebooks (optional if you use them)
+# Local-only source material / generated content inputs
+raw/
+notebooks/
+local-data/
+content-sources/
+
+# Heavy or private working files
+*.nb
 *.py
-*.ipynb
+*.fits
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.csv
+*.tsv
+*.parquet
+*.sqlite
+*.db
 
-# VSCode settings (optional but usually good)
+# Local archives
+*.tar
+*.tar.gz
+*.zip
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
 .vscode/
-
-# Temporary files
-*.log
-*.tmp
-.DS_Store  # Mac OS hidden files
-Thumbs.db  # Windows hidden files
+.idea/

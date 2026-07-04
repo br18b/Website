@@ -47,4 +47,14 @@ To get there, you had to keep the revs screaming in that glorious two-stroke com
 
 ## About the mod
 
-This page is now structured as a reusable project entry. Add more text, development notes, forum links, downloads, videos, or extra figures here without touching the project grid layout.
+As of now, this mod features:
+- fully openable doors and hood
+- togglable interior knobs:
+  - interior lights, headlights
+  - windshield wipers cycles
+  - choke
+  - ignition
+  - rooftop lights (cab & police version only)
+- cold engine start behavior: custom lua script that prevents the car from starting if the engine temperature is too cold (can be turned off)
+- jbeam-based animated windshield wipers
+- freewheeling — the engine RPM will fall down even in gear if the gas is not pressed — will act as if in neutral/clutch is pressed (can be removed in the parts selector). The arcade shifting logic was fully adjusted to acommodate this behavior without any hiccups. Upshifting can now be done clutchless to mimick the real-world behavior correctly.

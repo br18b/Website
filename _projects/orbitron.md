@@ -90,4 +90,4 @@ The Orbitron was not built for speed. It was built for spectacle. For the kind o
 
 {% include figure.html src="/BNG/pics/F4_1.png" alt="Orbitron" caption="Default factory version with a wraparound dome glass." align="right" %}
 
-This page is now a reusable project entry. Keep concept notes, build notes, and future screenshots here; the gallery and stats are generated from the front matter above.
+The mod is work-in-progress - currently in the modeling/texturing stage.
