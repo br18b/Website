@@ -60,6 +60,10 @@
   margin-bottom: 0;
 }
 
+.section--posts .post-list {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
 .site-header {
   position: sticky;
   top: 0;

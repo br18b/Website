@@ -13,6 +13,7 @@ local-data/
 content-sources/
 
 # Heavy or private working files
+*.sh
 *.nb
 *.py
 *.fits
