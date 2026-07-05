@@ -7,17 +7,19 @@ permalink: /about/
 {% include hero.html
   eyebrow="About"
   title="Who am I?"
-  subtitle="Astrophysicist, data analyst, simulation person, and part-time car enthusiast."
+  subtitle="Physicist-turned-data analyst with a penchant for mathematics, numerical simulations, and vintage cars."
 %}
 
-<div class="prose page-narrow">
+<div class="prose page-narrow" markdown="1">
 
-Hi! I'm Braňo — an astrophysicist and a part-time car enthusiast. This site is where I collect the things I have worked on and the occasional rabbit hole I fall into.
+Hi! I'm Braňo — a physicist-turned-data analyst with a soft spot for simulations, statistics, and the occasional automotive rabbit hole. This site is where I collect the things I have worked on, written about, or fallen into for suspiciously long periods of time.
 
-I spend a lot of time wrestling with supersonic turbulence, writing analysis code, and creating BeamNG car mods. I also occasionally manage to convince computers to do what I want after a passive-aggressive glaring standoff.
+I spend a lot of time wrestling with supersonic turbulence, writing analysis code, and creating BeamNG car mods. Somewhere in that mix are the things I keep coming back to: messy systems, visual explanations, data, and the strange satisfaction of making a computer finally do the thing I wanted.
 
-When I'm not buried in turbulence statistics or jbeaming my latest BeamNG fad, you might find me cycling, playing ultimate frisbee, or singing karaoke.
+Outside this site, I work as a data analyst on data-quality, validation, and reporting workflows for complex public-sector information systems. The details are not public, but the themes are familiar: APIs, messy data, metadata, consistency checks, reproducible pipelines, and reports that make hidden problems visible.
 
-Stick around for a weird mix of physics, code, and cars.
+When I'm not buried in turbulence statistics or tinkering with BeamNG mods, you might find me cycling, playing ultimate frisbee, or singing karaoke.
+
+Stick around for a weird mix of physics, code, data, and cars.
 
 </div>
