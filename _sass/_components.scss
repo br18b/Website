@@ -459,3 +459,115 @@
     grid-template-columns: 1fr;
   }
 }
+
+.aside-box {
+  --aside-accent: var(--accent);
+  --aside-accent-strong: var(--accent-strong);
+  --aside-bg: rgba(43, 108, 176, 0.07);
+
+  margin: 1.5rem 0;
+  border: 1px solid color-mix(in srgb, var(--aside-accent) 24%, var(--border));
+  border-left: 0.34rem solid var(--aside-accent);
+  border-radius: calc(var(--radius) + 2px);
+  background:
+    linear-gradient(135deg, var(--aside-bg), rgba(255,255,255,0.78) 62%),
+    var(--surface);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.aside-box--proof {
+  --aside-accent: #7c3aed;
+  --aside-accent-strong: #5b21b6;
+  --aside-bg: rgba(124, 58, 237, 0.075);
+}
+
+.aside-box--warning {
+  --aside-accent: #c26a15;
+  --aside-accent-strong: #8a4307;
+  --aside-bg: rgba(194, 106, 21, 0.085);
+}
+
+.aside-box__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1rem;
+}
+
+.aside-box__summary::-webkit-details-marker {
+  display: none;
+}
+
+.aside-box__heading {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.aside-box__kicker {
+  color: var(--aside-accent-strong);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.aside-box__title {
+  color: #172033;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.aside-box__toggle {
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--aside-accent) 30%, var(--border));
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  color: var(--aside-accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.46rem 0.68rem;
+}
+
+.aside-box__toggle-text--open,
+.aside-box[open] .aside-box__toggle-text--closed {
+  display: none;
+}
+
+.aside-box[open] .aside-box__toggle-text--open {
+  display: inline;
+}
+
+.aside-box__body {
+  padding: 0 1rem 1rem;
+}
+
+.aside-box__body > :first-child {
+  margin-top: 0;
+}
+
+.aside-box__body > :last-child {
+  margin-bottom: 0;
+}
+
+.math-center {
+  text-align: center;
+}
+
+.math-result {
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .aside-box__summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

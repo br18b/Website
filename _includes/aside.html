@@ -1,0 +1,22 @@
+{%- assign aside_label = include.label | default: "Aside" -%}
+{%- assign aside_tone = include.tone | default: "note" -%}
+{%- assign aside_show = include.show_text | default: "Show" -%}
+{%- assign aside_hide = include.hide_text | default: "Hide" -%}
+{%- assign aside_collapsed = include.collapsed | default: false -%}
+<details class="aside-box aside-box--{{ aside_tone | slugify }}"{% unless aside_collapsed == true or aside_collapsed == "true" %} open{% endunless %}>
+  <summary class="aside-box__summary">
+    <span class="aside-box__heading">
+      <span class="aside-box__kicker">{{ aside_label }}</span>
+      {%- if include.title -%}
+        <span class="aside-box__title">{{ include.title }}</span>
+      {%- endif -%}
+    </span>
+    <span class="aside-box__toggle" aria-hidden="true">
+      <span class="aside-box__toggle-text aside-box__toggle-text--closed">{{ aside_show }}</span>
+      <span class="aside-box__toggle-text aside-box__toggle-text--open">{{ aside_hide }}</span>
+    </span>
+  </summary>
+  <div class="aside-box__body">
+    {{ include.content | markdownify }}
+  </div>
+</details>

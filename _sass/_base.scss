@@ -50,10 +50,24 @@ blockquote {
 }
 
 table {
-  display: block;
-  overflow-x: auto;
   border-collapse: collapse;
   width: 100%;
+}
+
+.post-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.post-content table.centered-table,
+.article-content table.centered-table,
+table.centered-table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  overflow-x: visible;
 }
 
 th, td {
