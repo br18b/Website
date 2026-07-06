@@ -4,19 +4,34 @@ title: About
 permalink: /about/
 ---
 
+{% capture cv_actions %}
+  <div class="cv-download" aria-label="View CV">
+    <span class="cv-download__label">View CV</span>
+    <span class="cv-download__links">
+      <a class="button cv-download__button"
+         href="{{ '/assets/pdf/CV_SK.pdf' | relative_url }}"
+         target="_blank"
+         rel="noopener">
+        SK
+      </a>
+      <a class="button cv-download__button"
+         href="{{ '/assets/pdf/CV_EN.pdf' | relative_url }}"
+         target="_blank"
+         rel="noopener">
+        EN
+      </a>
+    </span>
+  </div>
+{% endcapture %}
+
 {% include hero.html
   eyebrow="About"
   title="Who am I?"
   subtitle="Physicist-turned-data analyst with a penchant for mathematics, numerical simulations, and vintage cars."
+  actions=cv_actions
 %}
 
 <div class="prose page-narrow" markdown="1">
-
-<div style="margin: 1.25rem 0 1.75rem;">
-  <a class="button" href="{{ '/assets/pdf/CV.pdf' | relative_url }}" target="_blank" rel="noopener">
-    Download CV
-  </a>
-</div>
 
 Hi! I'm Braňo — a physicist-turned-data analyst with a soft spot for simulations, statistics, and the occasional automotive rabbit hole. This site is where I collect the things I have worked on, written about, or fallen into for suspiciously long periods of time.
 
