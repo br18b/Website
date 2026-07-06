@@ -12,6 +12,12 @@ permalink: /about/
 
 <div class="prose page-narrow" markdown="1">
 
+<div style="margin: 1.25rem 0 1.75rem;">
+  <a class="button" href="{{ '/assets/pdf/CV.pdf' | relative_url }}" target="_blank" rel="noopener">
+    Download CV
+  </a>
+</div>
+
 Hi! I'm Braňo — a physicist-turned-data analyst with a soft spot for simulations, statistics, and the occasional automotive rabbit hole. This site is where I collect the things I have worked on, written about, or fallen into for suspiciously long periods of time.
 
 I spend a lot of time wrestling with supersonic turbulence, writing analysis code, and creating BeamNG car mods. Somewhere in that mix are the things I keep coming back to: messy systems, visual explanations, data, and the strange satisfaction of making a computer finally do the thing I wanted.
