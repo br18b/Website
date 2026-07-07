@@ -1,0 +1,87 @@
+{%- assign embed_label = include.label | default: "Interactive demo" -%}
+{%- assign embed_title = include.title | default: "Interactive visualization" -%}
+{%- assign button_text = include.button_text | default: "Load demo" -%}
+{%- assign loading_text = include.loading_text | default: "Loading demo…" -%}
+{%- assign height = include.height | default: "min(760px, 78vh)" -%}
+{%- assign mobile_height = include.mobile_height | default: "min(620px, 72vh)" -%}
+{%- assign preview_src = include.preview_src | default: "" -%}
+{%- assign preview_alt = include.preview_alt | default: embed_title -%}
+
+<figure
+  class="lazy-demo{% if include.wide %} lazy-demo--wide{% endif %}"
+  data-lazy-demo
+  data-src="{{ include.src | relative_url }}"
+  data-title="{{ embed_title | escape }}"
+  data-button-text="{{ button_text | escape }}"
+  data-loading-text="{{ loading_text | escape }}"
+  style="--lazy-demo-height: {{ height }}; --lazy-demo-mobile-height: {{ mobile_height }};"
+>
+  <div class="lazy-demo__header">
+    <div class="lazy-demo__heading">
+      <span class="lazy-demo__kicker">{{ embed_label }}</span>
+      <span class="lazy-demo__title">{{ embed_title }}</span>
+
+      {% if include.note %}
+        <span class="lazy-demo__note">{{ include.note }}</span>
+      {% endif %}
+    </div>
+
+    <button class="lazy-demo__button" type="button" data-lazy-demo-button>
+      {{ button_text }}
+    </button>
+  </div>
+
+  <div class="lazy-demo__shell">
+    <div class="lazy-demo__preview" data-lazy-demo-preview>
+      {% if preview_src != "" %}
+        <img
+          class="lazy-demo__preview-image"
+          src="{{ preview_src | relative_url }}"
+          alt="{{ preview_alt | escape }}"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="lazy-demo__preview-placeholder">
+          Interactive visualization preview
+        </div>
+      {% endif %}
+
+      <div class="lazy-demo__preview-overlay">
+        <button class="lazy-demo__button lazy-demo__button--large" type="button" data-lazy-demo-button>
+          {{ button_text }}
+        </button>
+
+        <span class="lazy-demo__preview-hint">
+          Static preview; the interactive WebGL version loads only after clicking.
+        </span>
+      </div>
+    </div>
+
+    <div class="lazy-demo__loader" aria-live="polite">
+      <span class="lazy-demo__loader-title">{{ loading_text }}</span>
+      <span class="lazy-demo__progress" aria-hidden="true"></span>
+      <span class="lazy-demo__loader-note">This can take a few seconds.</span>
+    </div>
+
+    <div class="lazy-demo__mount" data-lazy-demo-mount></div>
+  </div>
+
+  <p class="lazy-demo__links">
+    <a href="{{ include.src | relative_url }}" target="_blank" rel="noopener">
+      Open full screen
+    </a>
+  </p>
+
+  {% if include.caption %}
+    <figcaption class="lazy-demo__caption">
+      {{ include.caption | markdownify }}
+    </figcaption>
+  {% endif %}
+
+  <noscript>
+    <p class="lazy-demo__noscript">
+      JavaScript is disabled, so the embedded viewer cannot load here.
+      <a href="{{ include.src | relative_url }}">Open the atlas directly</a>.
+    </p>
+  </noscript>
+</figure>

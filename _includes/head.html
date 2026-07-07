@@ -40,4 +40,8 @@
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
   {%- endif -%}
+
+  {%- if page.lazy_iframe -%}
+    <script defer src="{{ '/assets/js/lazy-iframe.js' | relative_url }}"></script>
+  {%- endif -%}
 </head>
