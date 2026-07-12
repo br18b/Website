@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mandelbrot almost-boundary contour demo</title>
+  <script>
+    if (window.self !== window.top) {
+      document.documentElement.classList.add('is-embedded');
+    }
+  </script>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <main id="boundaryDemo" class="boundary-demo">
+    <div class="demo-header">
+      <div class="demo-title">Almost-boundaries</div>
+    </div>
+
+    <section id="demoStage" class="demo-stage" aria-label="Mandelbrot escape potential hover demo">
+      <div id="overviewPane" class="pane">
+        <canvas id="overviewCanvas"></canvas>
+        <div class="pane-title">global potential field</div>
+        <div id="gReadout" class="demo-readout overview-readout" aria-live="polite">loading…</div>
+        <div id="clickHint" class="click-hint">Click a highlighted region to pull up the detailed view.</div>
+      </div>
+
+      <div id="zoomOverlay" class="zoom-overlay" aria-hidden="true">
+        <div id="zoomShell" class="zoom-shell">
+          <div class="zoom-topbar">
+            <div>
+              <div id="zoomTitle" class="zoom-title">Detailed boundary view</div>
+              <div class="zoom-subtitle">Move the mouse to show the current escape-potential level.</div>
+            </div>
+            <div id="zoomReadout" class="zoom-readout" aria-live="polite"></div>
+            <button id="zoomClose" class="zoom-close" type="button" aria-label="Close detailed view">×</button>
+          </div>
+          <div class="zoom-canvas-wrap">
+            <canvas id="zoomCanvas"></canvas>
+            <div class="zoom-help">Hover over the complex plane to draw the nearest precomputed contour.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="demo-controls">
+      <span>Precomputed density map and contours of the Mandelbrot potential.</span>
+      <button id="showAllBtn" type="button">Show faint contours</button>
+    </div>
+  </main>
+  <script src="demo.js"></script>
+</body>
+</html>
