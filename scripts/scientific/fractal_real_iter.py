@@ -25,7 +25,13 @@ import matplotlib.pyplot as plt
 # User-facing knobs
 # ---------------------------------------------------------------------------
 
-OUTPUT_DIR = Path("fractal/2D")
+OUTPUT_DIR = (
+    Path(__file__).resolve().parents[2]
+    / "work"
+    / "promote"
+    / "fractal"
+    / "2D"
+)
 
 # Table columns: x_1, x_5, x_20, ...
 N_ITER_TABLE = [1, 5, 10, 20, 30, 31]

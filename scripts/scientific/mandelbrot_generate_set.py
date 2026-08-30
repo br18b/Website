@@ -7,13 +7,13 @@ All saved images have the SAME final plot size, while the sampling grid changes.
 This script writes two families of images:
 
 1) Black/white:
-    fractal/mandelbrot/mandelbrot_0064.png
-    fractal/mandelbrot/mandelbrot_0128.png
+    work/promote/mandelbrot/static/mandelbrot_0064.png
+    work/promote/mandelbrot/static/mandelbrot_0128.png
     ...
 
 2) Colored:
-    fractal/mandelbrot/mandelbrot_color_0064.png
-    fractal/mandelbrot/mandelbrot_color_0128.png
+    work/promote/mandelbrot/static/mandelbrot_color_0064.png
+    work/promote/mandelbrot/static/mandelbrot_color_0128.png
     ...
 
 Coloring:
@@ -32,7 +32,13 @@ from matplotlib.colors import to_rgb
 # User settings
 # ---------------------------------------------------------------------------
 
-OUTPUT_DIR = Path("fractal/mandelbrot")
+OUTPUT_DIR = (
+    Path(__file__).resolve().parents[2]
+    / "work"
+    / "promote"
+    / "mandelbrot"
+    / "static"
+)
 
 # Sampling grid sizes for the carousel.
 RESOLUTIONS = [64, 128, 256, 512, 1024, 2048]

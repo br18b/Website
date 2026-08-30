@@ -7,13 +7,18 @@ tracked normally and must not be moved to Git LFS.
 
 The currently public Mandelbrot boundary demo consists of fifteen runtime and
 preview files. Their hashes and producer are recorded in
-`data/manifests/generated-assets.tsv`. The committed `README.md` beside those
-files is provenance documentation, not part of the browser closure.
+`data/manifests/generated-assets.tsv`, including both public URLs and repository
+paths below `website/`. The committed `README.md` beside those files is
+provenance documentation, not part of the browser closure.
 
 The unfinished Fractals II draft references the boundary closure and five
-scaling plots. Those plots were selectively transferred as current supporting
-public assets.
+preserved scaling-plot candidates. None is referenced by a published page.
+They are deliberately absent from ordinary production source and retained only
+under ignored `work/promote/mandelbrot/scaling_plots/`. Their hashes and future
+promotion mapping are tracked in
+`data/manifests/fractals2-draft-assets.tsv`.
 
 Generated does not mean disposable: public outputs remain tracked when they
 are intentional and reviewed. Private calculation state remains outside Git,
-with the immutable migration snapshot serving as the Phase 2 rollback copy.
+with the immutable source snapshot and the root-layout checkpoint branch
+serving as local rollback points.

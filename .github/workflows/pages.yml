@@ -1,4 +1,4 @@
-name: Build and deploy root-layout Jekyll site
+name: Build and deploy website-layout Jekyll site
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -26,46 +29,89 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Build production site from repository root
+      - name: Build production site from website source
+        id: build
         env:
           JEKYLL_ENV: production
-        run: bundle exec jekyll build --source . --destination _site --trace
-
-      - name: Assert artifact boundary and draft safety
         shell: bash
         run: |
           set -euo pipefail
+          site_dir="${RUNNER_TEMP}/_site"
+          cache_config="${RUNNER_TEMP}/jekyll-cache.yml"
+          printf 'cache_dir: "%s"\n' "${RUNNER_TEMP}/jekyll-cache" > "${cache_config}"
+          bundle exec jekyll build \
+            --source website \
+            --config website/_config.yml,"${cache_config}" \
+            --destination "${site_dir}" \
+            --trace
+          echo "site_dir=${site_dir}" >> "${GITHUB_OUTPUT}"
 
-          for forbidden_root in scripts data work docs .github .git; do
-            if [[ -e "_site/${forbidden_root}" ]]; then
+      - name: Assert artifact boundary and draft safety
+        shell: bash
+        env:
+          SITE_DIR: ${{ steps.build.outputs.site_dir }}
+        run: |
+          set -euo pipefail
+
+          test -d "${SITE_DIR}"
+          for forbidden_root in website scripts data work docs .github .git; do
+            if [[ -e "${SITE_DIR}/${forbidden_root}" ]]; then
               echo "Forbidden repository content reached _site: ${forbidden_root}" >&2
               exit 1
             fi
           done
 
-          if find _site -type f \( \
+          if find "${SITE_DIR}" -type f \( \
             -name '*.fits' -o -name '*.sqlite' -o -name '*.sqlite3' -o \
             -name '*-wal' -o -name '*-shm' -o -name '*.bin' -o \
-            -name '*.o' -o -name '*.pyc' \
+            -name '*.o' -o -name '*.obj' -o -name '*.a' -o \
+            -name '*.so' -o -name '*.dll' -o -name '*.exe' -o \
+            -name '*.py' -o -name '*.pyc' -o -name '*.nb' -o \
+            -name '*.sh' -o -name '*.c' -o -name '*.cc' -o \
+            -name '*.cpp' -o -name '*.cxx' -o -name '*.h' -o \
+            -name '*.hpp' -o -name '*.npy' -o -name '*.npz' -o \
+            -name '*.h5' -o -name '*.hdf5' -o -name '*.ply' -o \
+            -name '*.tar' -o -name '*.tgz' -o -name '*.gz' -o \
+            -name '*.bz2' -o -name '*.xz' -o -name '*.zip' -o \
+            -name '*.7z' -o -name '*.rar' \
           \) -print -quit | grep -q .; then
-            echo 'Private scientific/build artifact reached _site.' >&2
+            echo 'Repository source, private data, build output, or archive reached _site.' >&2
             exit 1
           fi
 
-          test ! -e _site/blog/fractals-part-ii/index.html
-          if grep -R -F -q 'Fractals II: the misbehaving boundary' _site; then
+          if find "${SITE_DIR}" -type d \( \
+            -iname 'component_catalogue' -o -iname 'g_contours' -o \
+            -iname 'checkpoints' -o -iname 'restart' -o \
+            -iname 'runs' -o -iname 'exports' -o \
+            -iname '__pycache__' -o -iname '.objects' \
+          \) -print -quit | grep -q .; then
+            echo 'Private calculation/build directory reached _site.' >&2
+            exit 1
+          fi
+
+          if find "${SITE_DIR}" -type f -name '*.json' -printf '%f\n' \
+            | grep -E -q '^[0-9a-fA-F]{32,}\.json$'; then
+            echo 'Hash-sharded component JSON reached _site.' >&2
+            exit 1
+          fi
+
+          test ! -e "${SITE_DIR}/blog/fractals-part-ii/index.html"
+          if grep -R -F -q 'Fractals II: the misbehaving boundary' "${SITE_DIR}"; then
             echo 'The unfinished Fractals II draft reached the production site.' >&2
             exit 1
           fi
 
+          test -f "${SITE_DIR}/CNAME"
+          grep -F -x -q 'rabatinb.com' "${SITE_DIR}/CNAME"
+
       - name: Upload generated site only
         uses: actions/upload-pages-artifact@v4
         with:
-          path: _site
+          path: ${{ steps.build.outputs.site_dir }}
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pages: write

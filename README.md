@@ -1,21 +1,22 @@
 # Personal website
 
-This repository is in the first local reconstruction stage of a forensic
-migration. Git history and the current uncommitted website work are preserved,
-but no remote deployment change has been made.
+This repository is the selectively reconstructed result of a forensic website
+migration. Git history, the selected current website work, generator source,
+and irreplaceable input data are preserved. No remote deployment change has
+been made.
 
-Jekyll intentionally remains at the repository root for the first controlled
-GitHub Actions transition. The later move into `website/` is documented but is
-not part of this branch.
+`website/` is the sole authoritative Jekyll source boundary. The repository-only
+`scripts/`, `data/`, `docs/`, and ignored `work/` trees are never part of the
+published site.
 
 Key locations:
 
-- root Jekyll files and `fractal/`: current website source and public assets;
+- `website/`: Jekyll source and reviewed public static assets;
 - `scripts/mandelbrot/`: the retained v8 generators, schema, tests, and docs;
 - `scripts/scientific/` and `scripts/notebooks/`: selected scientific sources;
 - `data/source/`: irreplaceable input data tracked with hashes;
 - `work/`: ignored private state and promotion staging;
 - `docs/`: architecture, provenance, development, and regeneration guidance.
 
-See `docs/local-development.md` for Jekyll commands and
+See `docs/local-development.md` for `--source website` Jekyll commands and
 `docs/mandelbrot-data-root.md` before running catalogue tools.

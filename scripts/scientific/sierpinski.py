@@ -1,5 +1,6 @@
 import math
 import random
+from pathlib import Path
 import matplotlib.pyplot as plt
 
 def regular_ngon(n, radius=1.0, rotation=None):
@@ -61,4 +62,11 @@ plt.figure(figsize=(6, 6))
 plt.plot(xs, ys, ',', linestyle='None')
 plt.axis("equal")
 plt.axis("off")
-plt.savefig("sierpinski_ngon.png", dpi=300, bbox_inches="tight", pad_inches=0)
+output_path = (
+    Path(__file__).resolve().parents[2]
+    / "work"
+    / "promote"
+    / "sierpinski_ngon.png"
+)
+output_path.parent.mkdir(parents=True, exist_ok=True)
+plt.savefig(output_path, dpi=300, bbox_inches="tight", pad_inches=0)

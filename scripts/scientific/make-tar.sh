@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# This script should live inside the website/ folder.
-# It creates ../website-skeleton.tar.gz by default.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$SCRIPT_DIR"
+PROJECT_DIR="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)"
 PROJECT_NAME="$(basename "$PROJECT_DIR")"
 PARENT_DIR="$(dirname "$PROJECT_DIR")"
 
@@ -20,14 +18,15 @@ tar cv \
   --exclude="${PROJECT_NAME}/.bundle" \
   --exclude="${PROJECT_NAME}/vendor" \
   --exclude="${PROJECT_NAME}/node_modules" \
-  --exclude="${PROJECT_NAME}/CLT_plots" \
-  --exclude="${PROJECT_NAME}/BNG/pics" \
-  --exclude="${PROJECT_NAME}/pics" \
-  --exclude="${PROJECT_NAME}/fractal/textures" \
-  --exclude="${PROJECT_NAME}/fractal/mandelbrot" \
-  --exclude="${PROJECT_NAME}/fractal/wasm" \
-  --exclude="${PROJECT_NAME}/fractal/paths" \
-  --exclude="${PROJECT_NAME}/fractal/3D" \
+  --exclude="${PROJECT_NAME}/work" \
+  --exclude="${PROJECT_NAME}/website/CLT_plots" \
+  --exclude="${PROJECT_NAME}/website/BNG/pics" \
+  --exclude="${PROJECT_NAME}/website/pics" \
+  --exclude="${PROJECT_NAME}/website/fractal/textures" \
+  --exclude="${PROJECT_NAME}/website/fractal/mandelbrot" \
+  --exclude="${PROJECT_NAME}/website/fractal/wasm" \
+  --exclude="${PROJECT_NAME}/website/fractal/paths" \
+  --exclude="${PROJECT_NAME}/website/fractal/3D" \
   --exclude="*.png" \
   --exclude="*.jpg" \
   --exclude="*.jpeg" \

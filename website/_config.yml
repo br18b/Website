@@ -1,0 +1,45 @@
+title: Braňo's playground
+author: Branislav Rabatin
+email: rabatinb@gmail.com
+description: >-
+  My personal portfolio.
+url: "https://rabatinb.com"
+baseurl: ""
+github_username: br18b
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+# Assets that should be copied as-is.
+include:
+  - assets/js
+
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Sensible defaults: opt pages into heavier scripts only when needed.
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: project
+      gallery: true

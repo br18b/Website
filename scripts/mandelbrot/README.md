@@ -37,8 +37,8 @@ explicit tool path > MANDELBROT_DATA_ROOT > <repository>/work/mandelbrot
 
 `$data_root` in the JSON expands to that resolved root. Catalogue, contour,
 run, restart, and export state stays below it. Demo generators stage their
-outputs below `<repository>/work/promote/mandelbrot`; they do not publish into
-the Jekyll tree.
+outputs below `<repository>/work/promote/mandelbrot`; reviewed allow-lists are
+required to promote browser assets into `<repository>/website`.
 
 ## Build
 
@@ -232,7 +232,8 @@ The generator queries typed `ComponentRecord` objects directly from the catalogu
 invokes `fit_for_demo` when compact analytic fits are stale, and writes the
 self-contained browser demo to ignored review staging. It never parses catalogue
 persistence, scanner checkpoints, or `atlas_components*.json` files. Promotion
-into the website requires a separate reviewed allow-list.
+into `website/` requires a separate reviewed allow-list and
+`scripts/promote_assets.py --apply`.
 Force regeneration with:
 
 ```bash
