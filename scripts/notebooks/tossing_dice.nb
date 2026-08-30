@@ -73,7 +73,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice1.png\>\"", ",", "p1", ",", 
+   RowBox[{"\"\<CLT_plots/dice1.png\>\"", ",", "p1", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548495611371613`*^9, 3.9548495864798083`*^9}, {
   3.9548498004759636`*^9, 3.954849815034381*^9}, {3.954849890075613*^9, 
@@ -401,7 +401,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice2.png\>\"", ",", "p2", ",", 
+   RowBox[{"\"\<CLT_plots/dice2.png\>\"", ",", "p2", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548505545313745`*^9, 3.9548505576591673`*^9}, 
    3.9548506870523643`*^9, 3.954945383690653*^9},
@@ -914,7 +914,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice3.png\>\"", ",", "p3", ",", 
+   RowBox[{"\"\<CLT_plots/dice3.png\>\"", ",", "p3", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548557456078196`*^9, 3.9548557509273686`*^9}, 
    3.954945386510461*^9},
@@ -1621,7 +1621,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice4.png\>\"", ",", "p4", ",", 
+   RowBox[{"\"\<CLT_plots/dice4.png\>\"", ",", "p4", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548559066319213`*^9, 3.9548559103454065`*^9}, {
    3.9548560512858944`*^9, 3.9548560513837852`*^9}, {3.9548561339203644`*^9, 
@@ -2502,7 +2502,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice5.png\>\"", ",", "p5", ",", 
+   RowBox[{"\"\<CLT_plots/dice5.png\>\"", ",", "p5", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548559618469324`*^9, 3.954855965849599*^9}, 
    3.954856166205429*^9, 3.954945393410798*^9},
@@ -3565,7 +3565,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice6.png\>\"", ",", "p6", ",", 
+   RowBox[{"\"\<CLT_plots/dice6.png\>\"", ",", "p6", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.9548562634488215`*^9, 3.954856273586356*^9}, {
    3.9548622867334146`*^9, 3.9548622910527735`*^9}, {3.954862343110552*^9, 
@@ -9021,7 +9021,7 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Export", "[", 
-   RowBox[{"\"\<D:\\\\website\\\\CLT_plots\\\\dice50.png\>\"", ",", "p", ",", 
+   RowBox[{"\"\<CLT_plots/dice50.png\>\"", ",", "p", ",", 
     RowBox[{"ImageResolution", "\[Rule]", "100"}]}], "]"}], ";"}]}], "Input",
  CellChangeTimes->{{3.954860817483106*^9, 3.9548610024359827`*^9}, {
   3.9548610392128124`*^9, 3.9548612039029393`*^9}, {3.9548617794222717`*^9, 
