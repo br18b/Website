@@ -37,11 +37,12 @@ jobs:
         run: |
           set -euo pipefail
           site_dir="${RUNNER_TEMP}/_site"
+          cache_config="${RUNNER_TEMP}/jekyll-cache.yml"
+          printf 'cache_dir: "%s"\n' "${RUNNER_TEMP}/jekyll-cache" > "${cache_config}"
           bundle exec jekyll build \
             --source website \
-            --config website/_config.yml \
+            --config website/_config.yml,"${cache_config}" \
             --destination "${site_dir}" \
-            --cache-dir "${RUNNER_TEMP}/jekyll-cache" \
             --trace
           echo "site_dir=${site_dir}" >> "${GITHUB_OUTPUT}"
 
