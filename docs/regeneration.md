@@ -15,6 +15,19 @@ Use `--catalogue-root PATH` for an explicit catalogue location or set
 period 1 with resume disabled. `component_area_scan` is the first population
 tool, but it is computationally expensive and is not part of a smoke test.
 
+For an existing repository-local catalogue, use the non-modifying status and
+guarded resume workflow documented in `docs/mandelbrot-operations.md`:
+
+```bash
+./scripts/mandelbrot/ops.sh status
+./scripts/mandelbrot/ops.sh resume \
+  --config work/mandelbrot/config/resume-period22.json \
+  --plan
+```
+
+The tracked `mandelbrot.json` remains a fresh-run profile. Resume-sensitive
+values belong in an ignored local configuration under `work/mandelbrot/config/`.
+
 ## Browser generators
 
 The atlas and boundary generators read `scripts/mandelbrot/mandelbrot.json`

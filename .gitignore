@@ -1,4 +1,5 @@
-# Private generated state and review staging
+# Private generated state and review staging. Valuable files here are not
+# protected by Git; back them up and never run git clean -fdx casually.
 /work/**
 
 # Jekyll build/cache output

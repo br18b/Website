@@ -40,10 +40,16 @@ run, restart, and export state stays below it. Demo generators stage their
 outputs below `<repository>/work/promote/mandelbrot`; reviewed allow-lists are
 required to promote browser assets into `<repository>/website`.
 
+The normal active root is the repository-local default. Do not set
+`MANDELBROT_DATA_ROOT` for routine work; it is only an advanced explicit escape
+hatch. Ignored `work/` state is not protected by Git and must be backed up.
+
 ## Build
 
+From any working directory, use the repository-rooted facade:
+
 ```bash
-./build.sh
+/path/to/repository/scripts/mandelbrot/ops.sh build
 ```
 
 There is no build-time precision selector. Native arithmetic is `long double`.
@@ -62,7 +68,7 @@ Build and run the C++/Python catalogue, restart, deduplication, and migration
 tests with:
 
 ```bash
-./build.sh --test
+/path/to/repository/scripts/mandelbrot/ops.sh test
 ```
 
 The build is incremental and produces:
@@ -119,6 +125,19 @@ Catalogue CLI examples:
 ```
 
 See `docs/component_catalogue.md` for the schema and API.
+
+For a genuinely read-only report on an existing catalogue:
+
+```bash
+./scripts/mandelbrot/ops.sh status
+```
+
+This opens the database with SQLite `mode=ro` and `query_only`, sees existing
+WAL state, refuses to initialize a missing database, and checks that persistent
+database/WAL metadata did not change. A no-WAL restored database is opened as
+immutable to prevent SQLite from creating empty sidecars. See
+`docs/mandelbrot-operations.md` for guarded resume, stopping, restart, and
+backup procedures.
 
 ## Component workflow
 

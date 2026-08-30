@@ -162,17 +162,7 @@ void atomic_replace(const fs::path& temporary, const fs::path& target) {
 }
 
 fs::path executable_parent_or_cwd(const char* argv0) {
-    try {
-        fs::path path(argv0 ? argv0 : "");
-        if (!path.empty() && path.has_parent_path()) {
-            if (path.is_relative()) {
-                path = fs::absolute(path);
-            }
-            return fs::weakly_canonical(path.parent_path());
-        }
-    } catch (...) {
-    }
-    return fs::current_path();
+    return mandelbrot::repo::find_code_root(fs::path(argv0 ? argv0 : ""));
 }
 
 fs::path find_project_root_from(fs::path start) {
