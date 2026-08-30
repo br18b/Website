@@ -36,20 +36,59 @@ exclude:
   - MIGRATION_NOTES.md
   - LOCAL_DEVELOPMENT.md
   - Gemfile.lock
+  - .github/
   - .bundle/
   - .jekyll-cache/
   - .sass-cache/
   - node_modules/
   - vendor/
+
+  - data/
+  - docs/
+  - work/
+
   - raw/
   - notebooks/
-  - scripts/private/
+  - scripts
+
+  - fractal/mandelbrot/G_contours
+  - fractal/mandelbrot/component_catalogue
+  - fractal/mandelbrot/G_contours_probe_1e7
+  - fractal/mandelbrot/G_contours_probe_1e8
+  - fractal/mandelbrot/atlas_data
+  - fractal/3D
+
+  # Mathematica
   - "*.nb"
+  - "**/*.nb"
+
+  # scripts
+  - "*.py"
+  - "**/*.py"
+  - "*.sh"
+  - "**/*.sh"
+
+  # Scientific data
   - "*.fits"
+  - "**/*.fits"
   - "*.npy"
+  - "**/*.npy"
   - "*.npz"
+  - "**/*.npz"
   - "*.h5"
+  - "**/*.h5"
   - "*.hdf5"
+  - "**/*.hdf5"
+  - "*.ply"
+  - "**/*.ply"
+
+  # Tables and binary data
+  - "*.csv"
+  - "**/*.csv"
+  - "*.tsv"
+  - "**/*.tsv"
+  - "*.bin"
+  - "**/*.bin"
 
 # Sensible defaults: opt pages into heavier scripts only when needed.
 defaults:
