@@ -1,0 +1,96 @@
+{
+  "output_dir": "$project_root/work/promote/mandelbrot/demos/boundary",
+  "overview": {
+    "width": 1600,
+    "height": 1200,
+    "xmin": -2.28,
+    "xmax": 1.05,
+    "ymin": -1.25,
+    "ymax": 1.25,
+    "max_iter": 1500
+  },
+  "potential": {
+    "relative_tolerance": 1e-05,
+    "stable_steps": 2,
+    "overflow_radius": 1e+140,
+    "numeric_floor": 1e-300
+  },
+  "levels": {
+    "count": 150,
+    "mode": "quantile",
+    "min": "auto",
+    "max": 0.5,
+    "auto_min_support_pixels": 256,
+    "auto_min_support_fraction": 0.0005,
+    "max_samples_per_view": 250000
+  },
+  "color": {
+    "scheme": "cividis",
+    "reverse": false,
+    "min": "auto",
+    "max": "auto",
+    "lower_quantile": 0.002,
+    "upper_quantile": 0.995,
+    "gamma": 0.62
+  },
+  "contour_style": {
+    "faint_overview_rgba": "rgba(0,0,0,0.70)",
+    "faint_zoom_rgba": "rgba(0,0,0,0.28)",
+    "selected_rgba": "rgba(0,0,0,1.0)",
+    "faint_width": 1.15,
+    "selected_overview_width": 2.2,
+    "selected_zoom_width": 2.8,
+    "faint_count": 24
+  },
+  "window_style": {
+    "idle_stroke_rgba": "rgba(237,103,36,0.25)",
+    "idle_fill_rgba": "rgba(237,103,36,0.05)",
+    "normal_stroke_rgba": "rgba(255,52,72,0.50)",
+    "normal_fill_rgba": "rgba(255,52,72,0.2)",
+    "hover_stroke_rgba": "rgba(255,52,72,1.00)",
+    "hover_fill_rgba": "rgba(255,52,72,0.3)",
+    "normal_line_width": 2.0,
+    "hover_line_width": 3.0,
+    "corner_radius": 0.0,
+    "hover_distance_pixels": 0.0,
+    "show_hover_label": true,
+    "label_prefix": "",
+    "label_font": "700 18px system-ui, -apple-system, Segoe UI, sans-serif",
+    "label_background_rgba": "rgba(5,12,26,0.78)",
+    "label_text_rgba": "rgba(255,255,255,1.00)",
+    "label_padding_x": 8.0,
+    "label_height": 25.0,
+    "label_corner_radius": 10.0,
+    "label_gap": 8.0,
+    "idle_line_width": 1.0,
+    "proximity_range_box_widths": 6.0,
+    "proximity_falloff": "smoothstep"
+  },
+  "windows_global_settings": {
+    "width": 1200,
+    "height": 760,
+    "max_iter": 2000
+  },
+  "windows": [
+    {
+      "id": "seahorse",
+      "label": "Seahorse valley",
+      "bounds": [[-0.97,0.09],[-0.67,0.28]]
+    },
+    {
+      "id": "antenna",
+      "label": "Antenna tip",
+      "bounds": [[-1.9,-0.08],[-1.65,0.08]]
+    },
+    {
+      "id": "satellite",
+      "label": "Satellite bulb nodule",
+      "bounds": [[-1.34,-0.366],[-1.03,-0.17]]
+    },
+    {
+      "id": "main_cusp",
+      "label": "Main cusp fjord",
+      "bounds": [[0.2499,-0.05],[0.4099,0.05]]
+    }
+  ]
+}

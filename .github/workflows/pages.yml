@@ -1,0 +1,79 @@
+name: Build and deploy root-layout Jekyll site
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Set up locked Ruby bundle
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Build production site from repository root
+        env:
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --source . --destination _site --trace
+
+      - name: Assert artifact boundary and draft safety
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for forbidden_root in scripts data work docs .github .git; do
+            if [[ -e "_site/${forbidden_root}" ]]; then
+              echo "Forbidden repository content reached _site: ${forbidden_root}" >&2
+              exit 1
+            fi
+          done
+
+          if find _site -type f \( \
+            -name '*.fits' -o -name '*.sqlite' -o -name '*.sqlite3' -o \
+            -name '*-wal' -o -name '*-shm' -o -name '*.bin' -o \
+            -name '*.o' -o -name '*.pyc' \
+          \) -print -quit | grep -q .; then
+            echo 'Private scientific/build artifact reached _site.' >&2
+            exit 1
+          fi
+
+          test ! -e _site/blog/fractals-part-ii/index.html
+          if grep -R -F -q 'Fractals II: the misbehaving boundary' _site; then
+            echo 'The unfinished Fractals II draft reached the production site.' >&2
+            exit 1
+          fi
+
+      - name: Upload generated site only
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
