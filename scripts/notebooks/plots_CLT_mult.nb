@@ -996,7 +996,7 @@ Cell[BoxData[
   RowBox[{
    RowBox[{"Export", "[", 
     RowBox[{
-     RowBox[{"\"\<CLT_plots/logrho_ideal_n\>\"", "<>", 
+     RowBox[{"\"\<work/promote/CLT_plots/logrho_ideal_n\>\"", "<>",
       RowBox[{"ToString", "[", 
        RowBox[{"nList", "[", 
         RowBox[{"[", "i", "]"}], "]"}], "]"}], "<>", "\"\<.png\>\""}], ",", 

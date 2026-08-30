@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import maxwell, norm, lognorm
 from tqdm import tqdm
 import os
+from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -122,12 +123,15 @@ def multiplicative_clt_demo(
     plt.close()
     print(f"Saved density plot to {path_density}")
 
+output_dir = Path(__file__).resolve().parents[2] / "work" / "promote" / "CLT_plots"
+os.makedirs(output_dir, exist_ok=True)
+
 for n in [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500]:
     multiplicative_clt_demo(
         n=n,
         N=10000000,
         bins=200,
-        base_dir="CLT_plots",
+        base_dir=output_dir,
         title="Multiplicative Central Limit Theorem",
         filename="mach_lognormal_n" + str(n) + ".png",
         sigma=2.0

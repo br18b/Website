@@ -29,5 +29,5 @@ For an external writable root:
 export MANDELBROT_DATA_ROOT=/path/chosen/by/the/user
 ```
 
-That root may later point at compatible resumed local state, but Phase 2A did
-not copy any database, WAL/SHM, contour, checkpoint, or restart file.
+That root may point at compatible resumed local state, but the reconstruction
+does not copy any database, WAL/SHM, contour, checkpoint, or restart file.

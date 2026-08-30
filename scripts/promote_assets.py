@@ -156,7 +156,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--allow-list", type=Path, required=True)
     parser.add_argument("--source-root", type=Path, default=root / "work" / "promote")
-    parser.add_argument("--destination-root", type=Path, default=root)
+    parser.add_argument(
+        "--destination-root",
+        type=Path,
+        default=root / "website",
+        help="public Jekyll source root (default: <repository>/website)",
+    )
     parser.add_argument(
         "--apply",
         action="store_true",

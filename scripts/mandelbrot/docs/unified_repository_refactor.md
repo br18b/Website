@@ -62,4 +62,5 @@ The exact period scan is exhaustive through its configured maximum period. The `
 `make_atlas_demo.py` queries typed catalogue records at the configured cutoff. It expands canonical conjugate symmetry in memory, obtains compact analytic fits from `fit_for_demo`, and writes demo-only cache and browser files. It never reads `atlas_components*.json` back into the pipeline.
 
 Those files are staged, not public. A separate explicit allow-list and checksum
-review controls promotion into the Jekyll tree.
+review controls promotion into the Jekyll source under
+`<repository>/website/`.

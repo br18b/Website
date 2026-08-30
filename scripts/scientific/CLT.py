@@ -2,6 +2,7 @@ import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import os
+from pathlib import Path
 from scipy.stats import norm
 
 def clt_demo(
@@ -113,7 +114,7 @@ spiky6 = lambda size: sample_custom_tail(alpha=3, size=size)
 
 Npts = 10000000
 
-dir = 'CLT_plots'
+dir = Path(__file__).resolve().parents[2] / "work" / "promote" / "CLT_plots"
 os.makedirs(dir, exist_ok=True)
 
 # Example runs
