@@ -1,39 +1,26 @@
+# Private generated state and review staging
+/work/**
+
 # Jekyll build/cache output
-_site/
-.jekyll-cache/
-.sass-cache/
-.bundle/
-vendor/
-node_modules/
+/_site/
+/.jekyll-cache/
+/.sass-cache/
+/.bundle/
+/vendor/
+/node_modules/
 
-# Local-only source material / generated content inputs
-raw/
-notebooks/
-local-data/
-content-sources/
-
-# Heavy or private working files
-*.sh
-*.nb
-*.py
-*.fits
-*.npy
-*.npz
-*.h5
-*.hdf5
-*.csv
-*.tsv
-*.parquet
-*.sqlite
-*.db
-
-# Local archives
-*.tar
-*.tar.gz
-*.zip
+# Generator build products
+**/__pycache__/
+**/*.py[cod]
+/scripts/**/bin/
+/scripts/**/.objects/
+/scripts/**/.buildmeta/
+/scripts/**/.locks/
+/scripts/**/*.o
+/scripts/**/*.stamp
 
 # OS/editor noise
 .DS_Store
 Thumbs.db
-.vscode/
-.idea/
+/.vscode/
+/.idea/

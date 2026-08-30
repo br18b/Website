@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__DEMO_TITLE__</title>
+  <script>
+    if (window.self !== window.top) document.documentElement.classList.add('is-embedded');
+  </script>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <main id="atlasDemo" class="atlas-demo">
+    <header class="demo-header">
+      <div>
+        <h1>__DEMO_TITLE__</h1>
+        <p>__DEMO_SUBTITLE__</p>
+      </div>
+      <button id="resetView" type="button">Reset view</button>
+    </header>
+
+    <section id="stage" class="stage" aria-label="Interactive Mandelbrot component atlas">
+      <canvas id="fractalCanvas"></canvas>
+      <canvas id="overlayCanvas"></canvas>
+      <div id="status" class="status">loading component atlas…</div>
+      <div id="coordinate" class="coordinate"></div>
+      <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="instructions">
+      Drag to pan. Use the mouse wheel to zoom around the pointer. Click a component to select and frame it.
+    </section>
+
+    <section id="info" class="info" aria-live="polite">
+      <div class="info-empty">Move over a known component to inspect it.</div>
+    </section>
+  </main>
+  <script src="mandelbrot_webgl.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
