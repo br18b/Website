@@ -30,12 +30,18 @@ artifacts under `work/promote/SPH_demo/`. The reviewed public runtime closure is
 limited to `hydro_sph_WASM.html`, `sph.js`, `sph.wasm`, and
 `sph_snapshot.json` under `website/SPH_demo/`.
 
-## Deliberately absent
+## Generated scientific state
 
-The clean repository omits the revision-23 JSON catalogue, SQLite/WAL/SHM,
-contour and restart state, v7 and older Mandelbrot trees, compiled experiments,
-3D outputs, real-quadratic outputs, generated `_site`, caches, and archives.
-They remain preserved in the immutable migration snapshot.
+Git omits SQLite/WAL/SHM, contour and restart state, generated `_site`, caches,
+and build products. The active Mandelbrot catalogue, checkpoints, exports, and
+contours belong under ignored `work/mandelbrot/` inside the repository working
+tree. This keeps source, private state, and public output within one portable
+workspace without treating generated scientific state as a deployable asset.
+
+Ignored state is not protected by Git. Back up valuable `work/` contents and
+never run `git clean -fdx` in a workspace that contains the active catalogue.
+The superseded JSON catalogue and old implementation variants are not required
+for current operation and are not part of the active work tree.
 
 ## Deferred stale-URL compatibility
 
@@ -48,6 +54,6 @@ The retained generated-site inventory contained these unlinked legacy paths:
 ```
 
 Their current counterparts remain at `/fractal/2D/`. The stale family is not
-included and no redirects were invented. Before deployment, choose
+included and no redirects were added. Before changing compatibility, choose
 between explicit redirects, reviewed compatibility copies, or accepting their
 retirement based on access/link evidence.

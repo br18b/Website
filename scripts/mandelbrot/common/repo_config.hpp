@@ -211,6 +211,15 @@ inline fs::path resolve_data_root(
 }
 
 inline fs::path find_code_root(fs::path start) {
+    if (start.empty() || !start.has_parent_path()) {
+        std::error_code error;
+        const fs::path process_executable = fs::read_symlink("/proc/self/exe", error);
+        if (error || process_executable.empty()) {
+            throw std::runtime_error(
+                "Could not resolve the running executable; invoke the tool by path");
+        }
+        start = process_executable;
+    }
     start = canonical_or_absolute(start);
     if (fs::is_regular_file(start)) start = start.parent_path();
     for (fs::path current = start;; current = current.parent_path()) {
@@ -225,7 +234,6 @@ inline fs::path find_project_root(const fs::path& code_root) {
         if (fs::exists(current / ".git") || fs::exists(current / ".root")) return current;
         if (!current.has_parent_path() || current == current.parent_path()) break;
     }
-    if (code_root.parent_path().filename() == "scripts") return code_root.parent_path().parent_path();
     throw std::runtime_error("Could not locate project root from " + code_root.string());
 }
 

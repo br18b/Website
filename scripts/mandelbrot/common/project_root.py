@@ -23,11 +23,6 @@ def find_project_root(start: str | Path) -> Path:
     for candidate in (code_root, *code_root.parents):
         if (candidate / ".git").exists() or (candidate / ".root").exists():
             return candidate
-    # The website checkout commonly contains scripts/mandelbrot without a .git
-    # directory in exported bundles.  In that fixed layout, the project root is
-    # two levels above scripts/mandelbrot.
-    if code_root.parent.name == "scripts":
-        return code_root.parent.parent
     raise RuntimeError(f"Could not locate project root from {start}")
 
 

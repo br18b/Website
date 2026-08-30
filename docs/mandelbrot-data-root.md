@@ -1,7 +1,16 @@
 # Mandelbrot private data root
 
 Catalogue, contour, run, restart, and export state is local generated work—not
-a public website or Git asset.
+a public website or Git asset. The authoritative active root is normally:
+
+```text
+<repository>/work/mandelbrot
+```
+
+Keeping this state inside the repository working tree makes the whole
+workspace movable. Tools discover the repository from their own source or
+executable location and a `.git` (directory or file) or `.root` marker; they do
+not derive paths from the shell's current directory.
 
 Resolution precedence is:
 
@@ -23,11 +32,22 @@ work/mandelbrot/G_contours/
 work/promote/mandelbrot/
 ```
 
-For an external writable root:
+`MANDELBROT_DATA_ROOT` remains an advanced escape hatch for an intentionally
+external or isolated catalogue:
 
 ```bash
 export MANDELBROT_DATA_ROOT=/path/chosen/by/the/user
 ```
 
-That root may point at compatible resumed local state, but the reconstruction
-does not copy any database, WAL/SHM, contour, checkpoint, or restart file.
+Do not set it for ordinary operation. The portable operations wrapper clears
+an inherited value and uses the repository-local root unless `--data-root` is
+supplied explicitly.
+
+A new clone can initialize a new empty catalogue. To restore an existing
+active catalogue, restore its complete consistent state beneath
+`work/mandelbrot/`, including required checkpoints and contours. A SQLite main
+file copied without meaningful WAL state is not a complete backup.
+
+`work/` is ignored, but ignore rules do not protect it from filesystem loss or
+destructive cleanup. Maintain ordinary backups and never run `git clean -fdx`
+in a workspace containing valuable local state.

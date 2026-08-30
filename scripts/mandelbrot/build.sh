@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT_PATH=$(realpath -- "${BASH_SOURCE[0]}")
+ROOT_DIR=$(cd -- "$(dirname -- "$SCRIPT_PATH")" && pwd -P)
 BIN_DIR="$ROOT_DIR/bin"
 OBJ_DIR="$BIN_DIR/.objects"
 META_DIR="$BIN_DIR/.buildmeta"
@@ -131,9 +132,10 @@ if [[ "$RUN_TESTS" == true ]]; then
     "$ROOT_DIR/components/catalogue/test_catalogue.cpp" "$CAT_HPP" "$CAT_OBJ" -- \
     "$CXX" "${COMPONENT_FLAGS[@]}" "$ROOT_DIR/components/catalogue/test_catalogue.cpp" "$CAT_OBJ" "${SQLITE_LIBS[@]}" -o "$BIN_DIR/test_catalogue"
   "$BIN_DIR/test_catalogue"
-  python3 "$ROOT_DIR/components/catalogue/test_catalogue.py"
-  python3 "$ROOT_DIR/components/catalogue/test_restart.py"
-  python3 "$ROOT_DIR/components/catalogue/test_migration.py"
+  PYTHONDONTWRITEBYTECODE=1 python3 -B "$ROOT_DIR/common/test_repo_config.py"
+  PYTHONDONTWRITEBYTECODE=1 python3 -B "$ROOT_DIR/components/catalogue/test_catalogue.py"
+  PYTHONDONTWRITEBYTECODE=1 python3 -B "$ROOT_DIR/components/catalogue/test_restart.py"
+  PYTHONDONTWRITEBYTECODE=1 python3 -B "$ROOT_DIR/components/catalogue/test_migration.py"
 fi
 
 cat <<EOF
