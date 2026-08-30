@@ -6,14 +6,19 @@
 {%- assign mobile_height = include.mobile_height | default: "min(620px, 72vh)" -%}
 {%- assign preview_src = include.preview_src | default: "" -%}
 {%- assign preview_alt = include.preview_alt | default: embed_title -%}
+{%- assign fit_min_height = include.fit_min_height | default: "360" -%}
+{%- assign fit_max_height = include.fit_max_height | default: "1200" -%}
 
 <figure
-  class="lazy-demo{% if include.wide %} lazy-demo--wide{% endif %}"
+  class="lazy-demo{% if include.wide %} lazy-demo--wide{% endif %}{% if include.fit_content %} lazy-demo--fit-content{% endif %}"
   data-lazy-demo
   data-src="{{ include.src | relative_url }}"
   data-title="{{ embed_title | escape }}"
   data-button-text="{{ button_text | escape }}"
   data-loading-text="{{ loading_text | escape }}"
+  data-fit-content="{% if include.fit_content %}true{% else %}false{% endif %}"
+  data-fit-min-height="{{ fit_min_height | escape }}"
+  data-fit-max-height="{{ fit_max_height | escape }}"
   style="--lazy-demo-height: {{ height }}; --lazy-demo-mobile-height: {{ mobile_height }};"
 >
   <div class="lazy-demo__header">

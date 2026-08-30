@@ -706,6 +706,14 @@
   overflow: hidden;
 }
 
+.lazy-demo--fit-content .lazy-demo__shell {
+  min-height: 0;
+}
+
+.lazy-demo--fit-content .lazy-demo__iframe {
+  overflow: hidden;
+}
+
 .lazy-demo__preview,
 .lazy-demo__mount,
 .lazy-demo__iframe {
@@ -879,6 +887,10 @@
   .lazy-demo__shell {
     height: var(--lazy-demo-mobile-height);
     min-height: 380px;
+  }
+
+  .lazy-demo--fit-content .lazy-demo__shell {
+    min-height: 0;
   }
 
   .lazy-demo__preview-overlay {
