@@ -2,12 +2,12 @@ name: Build and deploy root-layout Jekyll site
 
 on:
   push:
-    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -65,6 +65,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       pages: write
